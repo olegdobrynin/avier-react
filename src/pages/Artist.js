@@ -1,10 +1,13 @@
 import { observer } from 'mobx-react-lite'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Col, Container, Image, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
+import { Context } from '..'
+import ArtList from '../components/ArtList'
 import DeleteArtist from '../components/modals/DeleteArtist'
 import EditArtist from '../components/modals/EditArtist'
-import { fetchOneArtist } from '../http/artAPI'
+import { fetchArts, fetchOneArtist } from '../http/artAPI'
+
 
 export default observer( function ArtPage() {
     const [artist, setArtist] = useState({})
@@ -12,14 +15,19 @@ export default observer( function ArtPage() {
     const img = process.env.REACT_APP_API_URL + "artists/" + artist.img;
     const [deleteVisible, setDeleteVisible] = useState(false)
     const [editVisible, setEditVisible] = useState(false)
-    
+    const {art} = useContext(Context)
+
     useEffect(() => {
         fetchOneArtist(id).then(data => setArtist(data))
-    }, [])
+        fetchArts(null, id, art.page, null).then(data => {
+            art.setArts(data.rows)
+            art.setTotalCount(data.count)
+        })
+    }, [art.page])
 
   return (
     <Container className='mt-3'>
-        <Row>
+        <Row className='my-3'>
             <Col md={8}>
                 <Image className="w-100" src={img}/>     
             </Col>
@@ -42,9 +50,9 @@ export default observer( function ArtPage() {
                         Редактировать
                     </Button>
                 </Row>
-                
             </Col>
         </Row>
+        <ArtList/>
         <DeleteArtist show={deleteVisible} onHide={() => setDeleteVisible(false)}/>
         <EditArtist show={editVisible} onHide={() => setEditVisible(false)}/>
     </Container>
