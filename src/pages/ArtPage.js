@@ -32,7 +32,7 @@ export default observer( function ArtPage() {
             <Col md={4}>
                 <Row>
                         {art.artists.map(artists => 
-                            <Row key={artists.id} onClick={() => navigate(ARTIST_ROUTE + '/' + artists.id)}>
+                            <Row key={artists.id} style={{cursor: 'pointer'}} onClick={() => navigate(ARTIST_ROUTE + '/' + artists.id)}>
                                 <h6>{artists.name}</h6>
                             </Row>
                         )}    
