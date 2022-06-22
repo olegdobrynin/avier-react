@@ -40,14 +40,14 @@ export default observer( function CreateArt({show, onHide}) {
 
   const addArt = () => {
     const formData = new FormData()
-    formData.append('name', name)
+    formData.set('name', name)
+    formData.set('year', `${year}`)
+    formData.set('typeId', art.selectedType.id)
+    formData.set('about', about)
+    formData.set('city', city)
+    formData.set('properties', JSON.stringify(properties))
+    formData.set('artists', JSON.stringify([artists]))
     formData.append('img', file)
-    formData.append('year', `${year}`)
-    formData.append('typeId', art.selectedType.id)
-    formData.append('artists', JSON.stringify([artists]))
-    formData.append('about', about)
-    formData.append('city', city)
-    formData.append('properties', JSON.stringify(properties))
     createArt(formData).then(data => {
        onHide()
        navigate(ART_ROUTE + '/' + data.id)
