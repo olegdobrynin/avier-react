@@ -8,6 +8,7 @@ import { ART_ROUTE } from '../../utils/consts'
 
 export default observer( function CreateArt({show, onHide}) {
   const now = Date.now();
+  const getSampleArtist = () => ({ id: '', name: 'Xyдoжник', number: Date.now() - now });
   const navigate = useNavigate();
   const {art} = useContext(Context)
   const [name, setName] = useState('')
@@ -16,12 +17,26 @@ export default observer( function CreateArt({show, onHide}) {
   const [year, setYear] = useState('')
   const [city, setCity] = useState('')
   const [properties, setProperties] = useState([])
-  const [artists, setArtists] = useState([]);
+  const [artists, setArtists] = useState([getSampleArtist()]);
 
   useEffect( () => {
     fetchTypes().then(data => art.setTypes(data))
     fetchArtists().then(data => art.setArtists(data))
 }, [])
+
+  const addArtist = () => {
+    if (artists.length !== art.artists.length) {
+      setArtists([...artists, getSampleArtist()]);
+    }
+  };
+
+  const changeArtist = (artistId, name, number) => {
+    setArtists(artists.map((i) => (i.number === number ? { ...i, artistId, name } : i)));
+  };
+
+  const removeArtist = (number) => {
+    setArtists(artists.filter((i) => i.number !== number));
+  };
 
   const addProperty = () => {
     setProperties([...properties, {title: '', description: '', number: Date.now() - now}])
@@ -51,7 +66,7 @@ export default observer( function CreateArt({show, onHide}) {
     formData.set('about', about)
     formData.set('city', city)
     formData.set('properties', JSON.stringify(properties))
-    formData.set('artists', JSON.stringify([artists]))
+    formData.set('artists', JSON.stringify(artists))
     files.forEach((file) => {
       formData.append('img', file);
     });
@@ -76,32 +91,30 @@ export default observer( function CreateArt({show, onHide}) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-            <Form>
-              <div className='d-flex flex-row'>
-                <Dropdown className='mt-2 mb-2 me-2'>
-                    <Dropdown.Toggle>{art.selectedArtist.name || "художник"}</Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      {art.artists.map(artist =>
-                        <Dropdown.Item
+        <Form>
+          <div className="d-flex flex-row">
+            {artists.map(({ name, number }) => (
+              <Dropdown className="mb-2 me-2">
+                <Dropdown.Toggle>{name}</Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {art.artists
+                    .filter(({ id }) => !artists.some(({ artistId }) => artistId === id))
+                    .map((artist) => (
+                      <Dropdown.Item
                         onClick={() => {
-                            art.setSelectedArtist(artist)
-                            setArtists(artist.id)
-                           }
-                         }
+                          changeArtist(artist.id, artist.name, number);
+                        }}
                         key={artist.id}
-                        >
-                          {artist.name}
-                        </Dropdown.Item>
-                        )}
-                    </Dropdown.Menu>
-                </Dropdown>
-                <Button
-                  className='mt-2 mb-2'
-                  onClick={() => {}}
-                >
-                  +
-                </Button>
-              </div>
+                      >
+                        {artist.name}
+                      </Dropdown.Item>
+                    ))}
+                </Dropdown.Menu>
+                <Button variant="danger" onClick={() => removeArtist(number)}>-</Button>
+              </Dropdown>
+            ))}
+            <Button className="mb-2" onClick={addArtist}>+</Button>
+          </div>
                 <Dropdown className='mt-2 mb-2'>
                     <Dropdown.Toggle>{art.selectedType.name || "тип"}</Dropdown.Toggle>
                     <Dropdown.Menu>
