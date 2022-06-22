@@ -7,6 +7,7 @@ import { createArt, fetchArtists, fetchTypes } from '../../http/artAPI'
 import { ART_ROUTE } from '../../utils/consts'
 
 export default observer( function CreateArt({show, onHide}) {
+  const now = Date.now();
   const navigate = useNavigate();
   const {art} = useContext(Context)
   const [name, setName] = useState('')
@@ -23,7 +24,7 @@ export default observer( function CreateArt({show, onHide}) {
 }, [])
 
   const addProperty = () => {
-    setProperties([...properties, {title: '', description: '', number: Date.now()}])
+    setProperties([...properties, {title: '', description: '', number: Date.now() - now}])
   }
 
   const changeProperty = (key, value, number) => {
