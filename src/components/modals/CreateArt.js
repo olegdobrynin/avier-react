@@ -11,7 +11,7 @@ export default observer( function CreateArt({show, onHide}) {
   const navigate = useNavigate();
   const {art} = useContext(Context)
   const [name, setName] = useState('')
-  const [file, setFile] = useState(null)
+  const [files, setFiles] = useState([])
   const [about, setAbout] = useState('')
   const [year, setYear] = useState('')
   const [city, setCity] = useState('')
@@ -35,9 +35,13 @@ export default observer( function CreateArt({show, onHide}) {
     setProperties(properties.filter(i => i.number !== number))
   }
 
-  const selectFile = e => {
-    setFile(e.target.files[0])
-  }
+  const selectFiles = (e) => {
+    const newFiles = [];
+    for (let i = 0; i < e.target.files.length; i += 1) {
+      newFiles.push(e.target.files[i]);
+    }
+    setFiles(newFiles);
+  };
 
   const addArt = () => {
     const formData = new FormData()
@@ -48,7 +52,9 @@ export default observer( function CreateArt({show, onHide}) {
     formData.set('city', city)
     formData.set('properties', JSON.stringify(properties))
     formData.set('artists', JSON.stringify([artists]))
-    formData.append('img', file)
+    files.forEach((file) => {
+      formData.append('img', file);
+    });
     createArt(formData).then(data => {
        onHide()
        navigate(ART_ROUTE + '/' + data.id)
@@ -145,11 +151,12 @@ export default observer( function CreateArt({show, onHide}) {
                   maxLength="4"
                 />
 
-                <Form.Control
-                  className='mt-3'
-                  type='file'
-                  onChange={selectFile}
-                />
+          <Form.Control
+            className="mt-3"
+            type="file"
+            multiple
+            onChange={selectFiles}
+          />
 
                 <hr/>
 
