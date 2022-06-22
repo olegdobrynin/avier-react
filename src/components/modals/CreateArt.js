@@ -70,13 +70,30 @@ export default observer( function CreateArt({show, onHide}) {
     files.forEach((file) => {
       formData.append('img', file);
     });
-    createArt(formData).then(data => {
+    return createArt(formData).then(data => {
        onHide()
        navigate(ART_ROUTE + '/' + data.id)
       }
     )
   }
 
+  function LoadingButton() {
+    const [isLoading, setLoading] = useState(false);
+
+    useEffect(() => {
+      if (isLoading) {
+        addArt().finally(() => setLoading(false));
+      }
+    }, [isLoading]);
+
+    const handleClick = () => setLoading(true);
+
+    return (
+      <Button disabled={isLoading} onClick={!isLoading ? handleClick : null}>
+        {isLoading ? 'Загрузка...' : 'Сохранить'}
+      </Button>
+    );
+  };
 
   return (
     <Modal
@@ -210,7 +227,7 @@ export default observer( function CreateArt({show, onHide}) {
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={onHide}>Закрыть</Button>
-        <Button onClick={addArt}>Сохранить</Button>
+        <LoadingButton />
       </Modal.Footer>
     </Modal>
   )
