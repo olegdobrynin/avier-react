@@ -15,7 +15,7 @@ export default observer( function CreateArt({show, onHide}) {
   const [year, setYear] = useState('')
   const [city, setCity] = useState('')
   const [property, setProperty] = useState([])
-  const [artistId, setArtistId] = useState([])
+  const [artists, setArtists] = useState([]);
 
   useEffect( () => {
     fetchTypes().then(data => art.setTypes(data))
@@ -45,7 +45,7 @@ export default observer( function CreateArt({show, onHide}) {
     formData.append('img', file)
     formData.append('year', `${year}`)
     formData.append('typeId', art.selectedType.id)
-    formData.append('artistId', JSON.stringify([artistId]))
+    formData.append('artists', JSON.stringify([artists]))
     formData.append('about', about)
     formData.append('city', city)
     formData.append('property', JSON.stringify(property))
@@ -79,7 +79,7 @@ export default observer( function CreateArt({show, onHide}) {
                         <Dropdown.Item 
                         onClick={() => {
                             art.setSelectedArtist(artist)
-                            setArtistId(artist.id)
+                            setArtists(artist.id)
                            }
                          } 
                         key={artist.id}
