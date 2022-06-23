@@ -16,10 +16,9 @@ export default observer( function EditArt({show, onHide}) {
   const {id} = useParams()
 
   useEffect(() => {
-    fetchOneArtist(id).then(data => { 
+    fetchOneArtist(id).then(data => {
         setName(data.name)
         setBio(data.bio)
-        setFile(data.img)
     } )
 }, [])
 
@@ -29,10 +28,12 @@ export default observer( function EditArt({show, onHide}) {
 
   const addArtist = () => {
      const formData = new FormData()
-    formData.append('name', name)
-    formData.append('img', file)
-    formData.append('bio', bio)
-    formData.append('userId', userId)   
+    formData.set('name', name)
+    formData.set('bio', bio)
+    formData.set('userId', userId)
+    if (file) {
+      formData.append('img', file)
+    }
     updateArtist(id, formData).then(data => {
        onHide()
        navigate(ARTIST_ROUTE + '/' + id)

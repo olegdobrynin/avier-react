@@ -4,15 +4,15 @@ import {
   Button, Col, Dropdown, Form, Modal, Row,
 } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { Context } from '../..';
-import { createArt, fetchArtists, fetchTypes } from '../../http/artAPI';
-import { ART_ROUTE } from '../../utils/consts';
+import { Context } from '../../index.js';
+import { createArt, fetchTypes } from '../../http/artAPI.js';
+import { ART_ROUTE } from '../../utils/consts.js';
 
 export default observer(({ show, onHide }) => {
   const now = Date.now();
   const getSampleArtist = () => ({ id: '', name: 'Xyдoжник', number: Date.now() - now });
   const navigate = useNavigate();
-  const { art } = useContext(Context);
+  const { art, user } = useContext(Context);
   const [name, setName] = useState('');
   const [files, setFiles] = useState([]);
   const [about, setAbout] = useState('');
@@ -23,13 +23,10 @@ export default observer(({ show, onHide }) => {
 
   useEffect(() => {
     fetchTypes().then((data) => art.setTypes(data));
-    fetchArtists().then((data) => art.setArtists(data));
   }, []);
 
   const addArtist = () => {
-    if (artists.length !== art.artists.length) {
-      setArtists([...artists, getSampleArtist()]);
-    }
+    setArtists([...artists, getSampleArtist()]);
   };
 
   const changeArtist = (artistId, name, number) => {
@@ -66,6 +63,7 @@ export default observer(({ show, onHide }) => {
     formData.set('properties', JSON.stringify(properties));
     formData.set('artists', JSON.stringify(artists));
     files.forEach((file) => formData.append('img', file));
+
     return createArt(formData).then(({ id }) => {
       onHide();
       navigate(`${ART_ROUTE}/${id}`);
@@ -93,7 +91,7 @@ export default observer(({ show, onHide }) => {
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter"> Добавить объект </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Добавить объект</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
@@ -102,7 +100,7 @@ export default observer(({ show, onHide }) => {
               <Dropdown className="mb-2 me-2">
                 <Dropdown.Toggle>{name}</Dropdown.Toggle>
                 <Dropdown.Menu>
-                  {art.artists
+                  {user.artists
                     .filter(({ id }) => !artists.some(({ artistId }) => artistId === id))
                     .map((artist) => (
                       <Dropdown.Item
@@ -116,7 +114,8 @@ export default observer(({ show, onHide }) => {
                 <Button variant="danger" onClick={() => removeArtist(number)}>-</Button>
               </Dropdown>
             ))}
-            <Button className="mb-2" onClick={addArtist}>+</Button>
+            {artists.length === user.artists.length
+              || <Button className="mb-2" onClick={addArtist}>+</Button>}
           </div>
           <Dropdown className="mt-2 mb-2">
             <Dropdown.Toggle>{art.selectedType.name || 'Тип'}</Dropdown.Toggle>
