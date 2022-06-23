@@ -13,7 +13,7 @@ const Main = observer( () => {
 
     useEffect( () => {
         fetchTypes().then(data => art.setTypes(data))
-        fetchArts(art.selectedType.id, null, art.page, null).then(data => {
+        fetchArts(art.selectedType.id, null, art.page, art.limit).then(data => {
             art.setArts(data.rows)
             art.setTotalCount(data.count)
         })
