@@ -9,7 +9,7 @@ import DeleteArt from '../components/modals/DeleteArt'
 
 export default observer( function ArtPage() {
     const navigate = useNavigate()
-    const [art, setArt] = useState( {properties: [], artists: [], extraImgs: []} )
+    const [art, setArt] = useState( {properties: [], artists: [], imgs: []} )
     const {id} = useParams()
     const [deleteVisible, setDeleteVisible] = useState(false)
     // const [editVisible, setEditVisible] = useState(false)
@@ -29,8 +29,8 @@ export default observer( function ArtPage() {
             <Col md={8}>
                 <Image className="w-100" src={img}/>
                 <Row>
-                    {art.extraImgs.map(extraImgs =>
-                        <Col key={extraImgs.img} md={3} className="mt-2" onClick={() => {setImg(process.env.REACT_APP_API_URL + "arts/" +extraImgs.img)}}><Image className='w-100' src={process.env.REACT_APP_API_URL + "arts/" + extraImgs.img}/></Col>
+                    {art.imgs.map(imgs =>
+                        <Col key={imgs} md={3} className="mt-2" onClick={() => {setImg(process.env.REACT_APP_API_URL + "arts/" +imgs)}}><Image className='w-100' src={process.env.REACT_APP_API_URL + "arts/" + imgs}/></Col>
                         )}
                 </Row>   
             </Col>
