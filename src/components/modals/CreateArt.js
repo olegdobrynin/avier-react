@@ -53,11 +53,7 @@ export default observer(({ show, onHide }) => {
   };
 
   const selectFiles = (e) => {
-    const newFiles = [];
-    for (let i = 0; i < e.target.files.length; i += 1) {
-      newFiles.push(e.target.files[i]);
-    }
-    setFiles(newFiles);
+    setFiles([...e.target.files]);
   };
 
   const addArt = () => {
@@ -69,12 +65,10 @@ export default observer(({ show, onHide }) => {
     formData.set('city', city);
     formData.set('properties', JSON.stringify(properties));
     formData.set('artists', JSON.stringify(artists));
-    files.forEach((file) => {
-      formData.append('img', file);
-    });
-    return createArt(formData).then((data) => {
+    files.forEach((file) => formData.append('img', file));
+    return createArt(formData).then(({ id }) => {
       onHide();
-      navigate(`${ART_ROUTE}/${data.id}`);
+      navigate(`${ART_ROUTE}/${id}`);
     });
   };
 
@@ -97,16 +91,9 @@ export default observer(({ show, onHide }) => {
   }
 
   return (
-    <Modal
-      show={show}
-      onHide={onHide}
-      size="lg"
-      centered
-    >
+    <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Добавить объект
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter"> Добавить объект </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
@@ -119,9 +106,7 @@ export default observer(({ show, onHide }) => {
                     .filter(({ id }) => !artists.some(({ artistId }) => artistId === id))
                     .map((artist) => (
                       <Dropdown.Item
-                        onClick={() => {
-                          changeArtist(artist.id, artist.name, number);
-                        }}
+                        onClick={() => changeArtist(artist.id, artist.name, number)}
                         key={artist.id}
                       >
                         {artist.name}
@@ -134,7 +119,7 @@ export default observer(({ show, onHide }) => {
             <Button className="mb-2" onClick={addArtist}>+</Button>
           </div>
           <Dropdown className="mt-2 mb-2">
-            <Dropdown.Toggle>{art.selectedType.name || 'тип'}</Dropdown.Toggle>
+            <Dropdown.Toggle>{art.selectedType.name || 'Тип'}</Dropdown.Toggle>
             <Dropdown.Menu>
               {art.types.map((type) => (
                 <Dropdown.Item
@@ -146,12 +131,11 @@ export default observer(({ show, onHide }) => {
               ))}
             </Dropdown.Menu>
           </Dropdown>
-
           <Form.Control
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="mt-3"
-            placeholder="Введите название.."
+            placeholder="Введите название..."
           />
           <Form.Control
             value={about}
@@ -159,29 +143,28 @@ export default observer(({ show, onHide }) => {
             className="mt-3"
             as="textarea"
             rows={3}
-            placeholder="описание"
+            placeholder="Описание"
           />
           <Form.Control
             value={city}
             onChange={(e) => setCity(e.target.value)}
             className="mt-3"
-            placeholder="Город.."
+            placeholder="Город"
           />
           <Form.Control
             value={year}
             onChange={(e) => {
               if (e.target.value.length <= 4) {
                 setYear(e.target.value);
-              } else { }
+              }
             }}
             className="mt-3"
-            placeholder="год"
+            placeholder="Год"
             type="number"
             min="1"
             max="2022"
             maxLength="4"
           />
-
           <Form.Control
             className="mt-3"
             type="file"
@@ -208,22 +191,17 @@ export default observer(({ show, onHide }) => {
                 />
               </Col>
               <Col md={4}>
-                <Button
-                  variant="outline-danger"
-                  onClick={() => removeProperty(i.number)}
-                >
+                <Button variant="outline-danger" onClick={() => removeProperty(i.number)}>
                   Удалить
                 </Button>
               </Col>
             </Row>
           ))}
-          <Button
-            className="mt-3"
-            variant="outline-dark"
-            onClick={addProperty}
-          >
-            Добавить свойство
-          </Button>
+          <div className="mt-3">
+            <Button variant="outline-dark" onClick={addProperty}>
+              Добавить свойство
+            </Button>
+          </div>
         </Form>
       </Modal.Body>
       <Modal.Footer>
