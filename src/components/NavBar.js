@@ -15,6 +15,7 @@ const NavBar = observer( () => {
       user.setUser({})
       user.setIsAuth(false)
       localStorage.setItem('token', '')
+      navigate(MAIN_ROUTE);
     }
 
     const logo = () => {
