@@ -20,10 +20,12 @@ export default observer( function CreateArt({show, onHide}) {
 
   const addArtist = () => {
      const formData = new FormData()
-    formData.append('name', name)
-    formData.append('img', file)
-    formData.append('bio', bio)
-    formData.append('userId', userId)   
+    formData.set('name', name)
+    formData.set('bio', bio)
+    formData.set('userId', userId)
+    if (file) {
+      formData.append('img', file)
+    }
     createArtist(formData).then(data => {
        onHide()
        navigate(ARTIST_ROUTE + '/' + data.id)
