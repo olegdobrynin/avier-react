@@ -32,6 +32,13 @@ export default observer( function Auth() {
         
     }
 
+    const handleKeyPress = (target) => {
+        if(target.charCode===13){
+            click();
+        } 
+      }
+      
+
   return (
     <Container 
         className='d-flex justify-content-center align-item-center py-5'
@@ -40,12 +47,12 @@ export default observer( function Auth() {
             <Form className='d-flex flex-column'>
                 <Form.Group className="mb-3" controlId="login">
                     <Form.Label>Логин</Form.Label>
-                    <Form.Control type="login" placeholder="Введите логин.." value={login} onChange={e => setLogin(e.target.value)}/>
+                    <Form.Control type="login" placeholder="Введите логин.." value={login} onChange={e => setLogin(e.target.value)} onKeyPress={handleKeyPress}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="password">
                     <Form.Label>Пароль</Form.Label>
-                    <Form.Control type="password" placeholder="Введите пароль.." value={password} onChange={e => setPassword(e.target.value)}/>
+                    <Form.Control type="password" placeholder="Введите пароль.." value={password} onChange={e => setPassword(e.target.value)} onKeyPress={handleKeyPress}/>
                 </Form.Group>
                 
                 <Button className='mt-3' variant={'primary'} onClick={click}>
