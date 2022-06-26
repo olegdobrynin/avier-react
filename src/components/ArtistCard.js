@@ -11,7 +11,9 @@ export default function ArtistCard({artist}) {
         <Card style={{cursor: 'pointer'}} className='mb-3'>
             <Card.Img variant="top" src={img} />
             <Card.Body>
+              <div className='d-flex justify-content-center align-items-center'>
                 <Card.Title>{artist.name}</Card.Title>
+              </div>
             </Card.Body>
         </Card>
     </Col>
