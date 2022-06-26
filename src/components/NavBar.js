@@ -1,14 +1,16 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Context } from '../index'
 import { ADMIN_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from '../utils/consts'
 import {observer} from "mobx-react-lite"
 import {Navbar, Container, Nav, NavDropdown} from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import CreateArt from './modals/CreateArt'
 
 const NavBar = observer( () => {
     const navigate = useNavigate()
     const {user} = useContext(Context)
     const {art} = useContext(Context)
+    const [artVisible, setArtVisible] = useState(false)
     art.setSelectedType(0)
     
     const logOut = () => {
@@ -44,7 +46,8 @@ const NavBar = observer( () => {
             title={user.userInfo.login}
             menuVariant="white"
           >
-            <NavDropdown.Item onClick={() => navigate(ADMIN_ROUTE)}>Admin</NavDropdown.Item>
+            <NavDropdown.Item onClick={() => navigate(ADMIN_ROUTE)}>Художники</NavDropdown.Item>
+            <NavDropdown.Item onClick={() => setArtVisible(true)}>Добавить арт</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item onClick={() => logOut()}>Выйти</NavDropdown.Item>
             </NavDropdown>
@@ -55,9 +58,10 @@ const NavBar = observer( () => {
             <Nav.Link onClick={() => navigate(LOGIN_ROUTE)}>Войти</Nav.Link>
         </Nav>
     }
+    <CreateArt show={artVisible} onHide={() => setArtVisible(false)}/>
     </Container>
   </Navbar>
-            
+  
   )
 }) 
 
