@@ -5,7 +5,7 @@ import AppRouter from "./components/AppRouter";
 import NavBar from './components/NavBar';
 import { observer } from 'mobx-react-lite';
 import { Context } from './index';
-import { check } from './http/userAPI';
+import { check, fetchInfo } from './http/userAPI';
 import { Spinner } from 'react-bootstrap';
 
 export default observer( function App() {
@@ -13,10 +13,13 @@ export default observer( function App() {
   const [loading, setLoading] = useState(true)
 
   useEffect( () => {
-    check().then(data => {
+    check().then( async (data) => {
       user.setUserInfo(data)
-      user.setUser(true)
+      user.setUser(user)
       user.setIsAuth(true)
+      let info = await fetchInfo(data.id);
+      user.setArtists(info.artists)
+
     }).finally(() => setLoading(false))
   }, [])
 
