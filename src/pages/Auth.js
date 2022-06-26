@@ -3,7 +3,7 @@ import React , { useContext, useState } from 'react'
 import { Button, Card, Container, Form } from 'react-bootstrap'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Context } from '..'
-import { auth, registration } from '../http/userAPI'
+import { auth, fetchInfo, registration } from '../http/userAPI'
 import { LOGIN_ROUTE, MAIN_ROUTE } from '../utils/consts'
 
 export default observer( function Auth() {
@@ -22,9 +22,12 @@ export default observer( function Auth() {
             } else {
                 data = await registration(login, password);
             }
+
             user.setUser(user)
             user.setIsAuth(true)
-            user.setUserInfo(data)
+            user.setUserInfo(data)      
+            let info = await fetchInfo(data.id);
+            user.setArtists(info.artists)
             navigate(MAIN_ROUTE)
         } catch (e) {
             alert(e.response.data.message)
