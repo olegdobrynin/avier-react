@@ -10,7 +10,7 @@ import { ART_ROUTE } from '../../utils/consts.js';
 
 export default observer(({ show, onHide }) => {
   const now = Date.now();
-  const getSampleArtist = () => ({ id: '', name: 'Xyдoжник', number: Date.now() - now });
+  const getSampleArtist = () => ({ name: 'Xyдoжник', number: Date.now() - now });
   const navigate = useNavigate();
   const { art, user } = useContext(Context);
   const [name, setName] = useState('');
@@ -56,7 +56,7 @@ export default observer(({ show, onHide }) => {
   const addArt = () => {
     const formData = new FormData();
     formData.set('name', name);
-    formData.set('year', `${year}`);
+    formData.set('year', year);
     formData.set('typeId', art.selectedType.id);
     formData.set('about', about);
     formData.set('city', city);
@@ -64,10 +64,12 @@ export default observer(({ show, onHide }) => {
     formData.set('artists', JSON.stringify(artists));
     files.forEach((file) => formData.append('img', file));
 
-    return createArt(formData).then(({ id }) => {
-      onHide();
-      navigate(`${ART_ROUTE}/${id}`);
-    });
+    return createArt(formData)
+      .then(({ id }) => {
+        onHide();
+        navigate(`${ART_ROUTE}/${id}`);
+      })
+      .catch((err) => alert(err.response.data.message));
   };
 
   function LoadingButton() {
@@ -82,7 +84,7 @@ export default observer(({ show, onHide }) => {
     const handleClick = () => setLoading(true);
 
     return (
-      <Button disabled={isLoading} onClick={!isLoading ? handleClick : null}>
+      <Button disabled={isLoading} onClick={() => isLoading || handleClick()}>
         {isLoading ? 'Загрузка...' : 'Сохранить'}
       </Button>
     );
@@ -114,7 +116,7 @@ export default observer(({ show, onHide }) => {
                 <Button variant="danger" onClick={() => removeArtist(number)}>-</Button>
               </Dropdown>
             ))}
-            {artists.length === user.artists.length
+            {artists.length >= user.artists.length
               || <Button className="mb-2" onClick={addArtist}>+</Button>}
           </div>
           <Dropdown className="mt-2 mb-2">
