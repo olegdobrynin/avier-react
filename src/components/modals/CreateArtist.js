@@ -1,42 +1,41 @@
-import { observer } from 'mobx-react-lite'
-import React, { useContext, useState } from 'react'
-import { Button, Form, Modal } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
-import { Context } from '../..'
-import { createArtist } from '../../http/artistAPI'
-import { ARTIST_ROUTE } from '../../utils/consts'
+import { observer } from 'mobx-react-lite';
+import React, { useContext, useState } from 'react';
+import { Button, Form, Modal } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { Context } from '../../index.js';
+import { createArtist } from '../../http/artistAPI.js';
+import { ARTIST_ROUTE } from '../../utils/consts.js';
 
-export default observer( function CreateArt({show, onHide}) {
+export default observer(({ show, onHide }) => {
   const navigate = useNavigate();
-  const [name, setName] = useState('')
-  const [file, setFile] = useState(null)
-  const [bio, setBio] = useState('')
-  const {user} = useContext(Context)
-  const userId = user.userInfo.id
+  const [name, setName] = useState('');
+  const [file, setFile] = useState(null);
+  const [bio, setBio] = useState('');
+  const { user } = useContext(Context);
+  const userId = user.userInfo.id;
 
-  const selectFile = e => {
-    setFile(e.target.files[0])
-  }
+  const selectFile = (e) => {
+    setFile(e.target.files[0]);
+  };
 
   const addArtist = () => {
-     const formData = new FormData()
-    formData.set('name', name)
-    formData.set('bio', bio)
-    formData.set('userId', userId)
+    const formData = new FormData();
+    formData.set('name', name);
+    formData.set('bio', bio);
+    formData.set('userId', userId);
     if (file) {
-      formData.append('img', file)
+      formData.append('img', file);
     }
-    createArtist(formData).then(data => {
-       onHide()
-       navigate(ARTIST_ROUTE + '/' + data.id)
-      }
-    )
-  }
+    return createArtist(formData).then((data) => {
+      onHide();
+      navigate(`${ARTIST_ROUTE}/${data.id}`);
+    });
+  };
 
   return (
     <Modal
-    show={show}
-    onHide={onHide}
+      show={show}
+      onHide={onHide}
       size="lg"
       centered
     >
@@ -45,35 +44,35 @@ export default observer( function CreateArt({show, onHide}) {
           Добавить художника
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-            <Form>
-                <Form.Control
-                  value={name}
-                  onChange={e => setName(e.target.value)}
-                  className='mt-3'
-                  placeholder='Введите имя..'
-                />
-                 <Form.Control
-                        value={bio}
-                        onChange={e => setBio(e.target.value)}
-                        className='mt-3'
-                        as="textarea" 
-                        rows={3}
-                        placeholder='Биография'
-                      />
-                                     
-                <Form.Control
-                  className='mt-3'
-                  type='file'
-                  onChange={selectFile}
-                />
 
-            </Form>
+      <Modal.Body>
+        <Form>
+          <Form.Control
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="mt-3"
+            placeholder="Введите имя.."
+          />
+          <Form.Control
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+            className="mt-3"
+            as="textarea"
+            rows={3}
+            placeholder="Биография"
+          />
+          <Form.Control
+            className="mt-3"
+            type="file"
+            onChange={selectFile}
+          />
+        </Form>
       </Modal.Body>
+
       <Modal.Footer>
         <Button onClick={onHide}>Закрыть</Button>
         <Button onClick={addArtist}>Создать</Button>
       </Modal.Footer>
     </Modal>
-  )
-})
+  );
+});
