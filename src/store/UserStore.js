@@ -24,6 +24,10 @@ export default class UserStore {
         this._artists = artists
     }
 
+    addArtist(artist) {
+        this._artists.push(artist);
+    }
+
     get isAuth() {
         return this._isAuth
     }

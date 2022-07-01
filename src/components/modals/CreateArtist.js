@@ -26,9 +26,10 @@ export default observer(({ show, onHide }) => {
     if (file) {
       formData.append('img', file);
     }
-    return createArtist(formData).then((data) => {
+    return createArtist(formData).then((artist) => {
+      user.addArtist(artist);
       onHide();
-      navigate(`${ARTIST_ROUTE}/${data.id}`);
+      navigate(`${ARTIST_ROUTE}/${artist.id}`);
     });
   };
 
