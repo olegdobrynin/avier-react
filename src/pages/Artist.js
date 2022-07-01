@@ -14,13 +14,14 @@ export default observer(() => {
   const { id } = useParams();
   const { art, user } = useContext(Context);
   const [artist, setArtist] = useState({});
-  const img = process.env.REACT_APP_API_URL + "artists/" + artist.img;
+  const [img, setImg] = useState('');
   const [deleteVisible, setDeleteVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
 
   useEffect(() => {
     fetchOneArtist(id).then((data) => {
       setArtist(data);
+      setImg(`${process.env.REACT_APP_API_URL}artists/${data.img}`);
     });
     fetchArts(null, id, art.page, null).then((data) => {
       art.setArts(data.rows);
