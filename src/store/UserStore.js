@@ -28,6 +28,10 @@ export default class UserStore {
         this._artists.push(artist);
     }
 
+    deleteArtist(artist) {
+        this._artists = this._artists.filter(({ id }) => Number(artist.id) !== id);
+    }
+
     get isAuth() {
         return this._isAuth
     }
