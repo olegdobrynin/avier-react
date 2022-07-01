@@ -40,18 +40,18 @@ export default observer(() => {
           {!user.artists.some((artist) => artist.id === Number(id)) || (
           <Row>
             <Button
-              className="mt-2 mb-2"
-              variant="outline-danger"
-              onClick={() => setDeleteVisible(true)}
-            >
-              Удалить
-            </Button>
-            <Button
-              className="mt-2 mb-2"
+              className="my-2"
               variant="outline-dark"
               onClick={() => setEditVisible(true)}
             >
               Редактировать
+            </Button>
+            <Button
+              className="my-2"
+              variant="outline-danger"
+              onClick={() => setDeleteVisible(true)}
+            >
+              Удалить
             </Button>
           </Row>
           )}
