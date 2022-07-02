@@ -23,7 +23,6 @@ export default observer( function Auth() {
                 data = await registration(login, password);
             }
 
-            user.setUser(user)
             user.setIsAuth(true)
             user.setUserInfo(data)      
             let info = await fetchInfo(data.id);

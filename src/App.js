@@ -15,7 +15,6 @@ export default observer( function App() {
   useEffect( () => {
     check().then( async (data) => {
       user.setUserInfo(data)
-      user.setUser(user)
       user.setIsAuth(true)
       let info = await fetchInfo(data.id);
       user.setArtists(info.artists)

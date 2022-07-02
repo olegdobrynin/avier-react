@@ -12,9 +12,8 @@ const NavBar = observer( () => {
     const {art} = useContext(Context)
     const [artVisible, setArtVisible] = useState(false)
     art.setSelectedType(0)
-    
+
     const logOut = () => {
-      user.setUser({})
       user.setIsAuth(false)
       localStorage.setItem('token', '')
       navigate(MAIN_ROUTE);
@@ -61,8 +60,8 @@ const NavBar = observer( () => {
     <CreateArt show={artVisible} onHide={() => setArtVisible(false)}/>
     </Container>
   </Navbar>
-  
+
   )
-}) 
+})
 
 export default NavBar;
