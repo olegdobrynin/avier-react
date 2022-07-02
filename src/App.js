@@ -1,30 +1,35 @@
 import React, { useContext, useEffect, useState } from 'react'
-import './App.css';
-import {BrowserRouter} from "react-router-dom";
-import AppRouter from "./components/AppRouter";
-import NavBar from './components/NavBar';
-import { observer } from 'mobx-react-lite';
-import { Context } from './index';
-import { check, fetchInfo } from './http/userAPI';
 import { Spinner } from 'react-bootstrap';
+import { BrowserRouter } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
+import './App.css';
+import NavBar from './components/NavBar.js';
+import AppRouter from './components/AppRouter.js';
+import { Context } from './index.js';
+import { check, fetchInfo } from './http/userAPI.js';
 
-export default observer( function App() {
-  const {user} = useContext(Context)
-  const [loading, setLoading] = useState(true)
+export default observer(() => {
+  const { user } = useContext(Context);
+  const [loading, setLoading] = useState(true);
 
-  useEffect( () => {
-    check().then( async (data) => {
-      user.setUserInfo(data)
-      user.setUser(user)
-      user.setIsAuth(true)
-      let info = await fetchInfo(data.id);
-      user.setArtists(info.artists)
-
-    }).finally(() => setLoading(false))
-  }, [])
+  useEffect(() => {
+    if (localStorage.token) {
+      check()
+        .then((data) => {
+          user.setInfo(data);
+          user.setIsAuth();
+          return fetchInfo(data.id);
+        })
+        .then(({ artists }) => user.setArtists(artists))
+        .then(() => console.log(user))
+        .finally(() => setLoading(false));
+    } else {
+      setLoading(false);
+    }
+  }, []);
 
   if (loading) {
-    return <Spinner animation={"grow"}/>
+    return (<Spinner animation={"grow"}/>);
   }
 
   return (
@@ -33,4 +38,4 @@ export default observer( function App() {
       <AppRouter />
     </BrowserRouter>
   );
-})
+});

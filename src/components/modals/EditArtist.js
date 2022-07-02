@@ -11,9 +11,9 @@ export default observer( function EditArt({show, onHide}) {
   const [name, setName] = useState('')
   const [file, setFile] = useState(null)
   const [bio, setBio] = useState('')
-  const {user} = useContext(Context)
-  const userId = user.userInfo.id
-  const {id} = useParams()
+  const { user } = useContext(Context)
+  const userId = user.info.id
+  const { id } = useParams()
 
   useEffect(() => {
     fetchOneArtist(id).then(data => {
@@ -27,7 +27,7 @@ export default observer( function EditArt({show, onHide}) {
   }
 
   const addArtist = () => {
-     const formData = new FormData()
+    const formData = new FormData()
     formData.set('name', name)
     formData.set('bio', bio)
     formData.set('userId', userId)
@@ -43,8 +43,8 @@ export default observer( function EditArt({show, onHide}) {
 
   return (
     <Modal
-    show={show}
-    onHide={onHide}
+      show={show}
+      onHide={onHide}
       size="lg"
       centered
     >
@@ -53,35 +53,35 @@ export default observer( function EditArt({show, onHide}) {
           Изменить художника
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-            <Form>
-                <Form.Control
-                  value={name}
-                  onChange={e => setName(e.target.value)}
-                  className='mt-3'
-                  placeholder='Введите имя..'
-                />
-                 <Form.Control
-                        value={bio}
-                        onChange={e => setBio(e.target.value)}
-                        className='mt-3'
-                        as="textarea" 
-                        rows={3}
-                        placeholder='Биография'
-                      />
-                                    
-                <Form.Control
-                  className='mt-3'
-                  type='file'
-                  onChange={selectFile}
-                />
 
-            </Form>
+      <Modal.Body>
+        <Form>
+          <Form.Control
+            value={name}
+            onChange={e => setName(e.target.value)}
+            className='mt-3'
+            placeholder='Введите имя..'
+          />
+          <Form.Control
+            value={bio}
+            onChange={e => setBio(e.target.value)}
+            className='mt-3'
+            as="textarea"
+            rows={3}
+            placeholder='Биография'
+          />
+          <Form.Control
+            className='mt-3'
+            type='file'
+            onChange={selectFile}
+          />
+        </Form>
       </Modal.Body>
+
       <Modal.Footer>
         <Button onClick={onHide}>Закрыть</Button>
-        <Button onClick={addArtist}>Создать</Button>
+        <Button onClick={addArtist}>Изменить</Button>
       </Modal.Footer>
     </Modal>
-  )
-})
+  );
+});

@@ -1,42 +1,48 @@
-import {makeAutoObservable} from "mobx";
+import { makeAutoObservable } from 'mobx';
 
 export default class UserStore {
-    constructor() {
-        this._isAuth = false
-        this._user = {}
-        this._userInfo = []
-        this._artists = []
-        makeAutoObservable(this)
-    }
+  constructor() {
+    this._isAuth = false;
+    this._info = [];
+    this._artists = [];
+    makeAutoObservable(this);
+  }
 
-    setIsAuth(bool) {
-        this._isAuth = bool
-    }
-    setUser(user) {
-        this._user = user
-    }
+  setIsAuth() {
+    this._isAuth = !this._isAuth;
+  }
 
-    setUserInfo(userInfo) {
-        this._userInfo = userInfo
-    }
+  setInfo(info) {
+    this._info = info;
+  }
 
-    setArtists(artists) {
-        this._artists = artists
-    }
+  setArtists(artists) {
+    this._artists = artists;
+  }
 
-    get isAuth() {
-        return this._isAuth
-    }
+  addArtist(artist) {
+    this._artists.push(artist);
+  }
 
-    get user() {
-        return this._user
-    }
+  deleteArtist(artist) {
+    this._artists = this._artists.filter(({ id }) => Number(artist.id) !== id);
+  }
 
-    get userInfo() {
-        return this._userInfo
-    }
+  clear() {
+    this._isAuth = false;
+    this._info = [];
+    this._artists = [];
+  }
 
-    get artists() {
-        return this._artists
-    }
+  get isAuth() {
+    return this._isAuth;
+  }
+
+  get info() {
+    return this._info;
+  }
+
+  get artists() {
+    return this._artists;
+  }
 }
