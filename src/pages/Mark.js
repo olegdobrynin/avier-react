@@ -1,7 +1,8 @@
+import { observer } from 'mobx-react-lite'
 import React from 'react'
 
-export default function Mark() {
+export default observer(() => {
   return (
     <div>Mark</div>
-  )
-}
+  );
+});
