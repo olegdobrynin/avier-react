@@ -15,7 +15,7 @@ const NavBar = observer( () => {
 
     const logOut = () => {
       user.setIsAuth(false)
-      localStorage.setItem('token', '')
+      localStorage.clear();
       navigate(MAIN_ROUTE);
     }
 
@@ -39,10 +39,9 @@ const NavBar = observer( () => {
 
     {user.isAuth ?
         <Nav className="ml-auto">
-
             <NavDropdown
             id="nav-dropdown"
-            title={user.userInfo.login}
+            title={user.info.login}
             menuVariant="white"
           >
             <NavDropdown.Item onClick={() => navigate(ADMIN_ROUTE)}>Художники</NavDropdown.Item>

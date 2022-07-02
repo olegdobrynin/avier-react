@@ -12,7 +12,7 @@ export default observer(({ show, onHide }) => {
   const [file, setFile] = useState(null);
   const [bio, setBio] = useState('');
   const { user } = useContext(Context);
-  const userId = user.userInfo.id;
+  const userId = user.info.id;
 
   const selectFile = (e) => {
     setFile(e.target.files[0]);
