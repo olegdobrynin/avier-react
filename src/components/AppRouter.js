@@ -1,26 +1,24 @@
-import React, { useContext } from "react"
-import { Routes, Route, Navigate } from "react-router-dom"
-import { Context } from "../index"
-import { authRoutes, publicRoutes } from '../routes'
-import { MAIN_ROUTE } from '../utils/consts'
+import React, { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { Context } from '../index.js';
+import { authRoutes, publicRoutes } from '../routes.js';
+import { LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from '../utils/consts.js';
 
-function AppRouter() {
-    const {user} = useContext(Context)
+export default observer(() => {
+  const { user } = useContext(Context);
+
+  const getRoutes = () => user.isAuth
+    ? [...authRoutes, ...publicRoutes]
+      .filter(({ path }) => path !== REGISTRATION_ROUTE && path !== LOGIN_ROUTE)
+      .map(({ path, element }) => (<Route key={path} path={path} element={element} end />))
+    : publicRoutes
+      .map(({ path, element }) => (<Route key={path} path={path} element={element} end />));
 
   return (
-
-        <Routes>
-
-         { user.isAuth && authRoutes.map(({path, element}) =>
-                <Route key={path} path={path} element={element} end />
-            )}
-            {publicRoutes.map(({path, element}) =>
-                <Route key={path} path={path} element={element}  end />
-            )}
-            <Route path="*" element={<Navigate to ={MAIN_ROUTE} />}/>
-        </Routes>
-  )
-}
-
-
-export default AppRouter
+    <Routes>
+      {getRoutes()}
+      <Route path="*" element={<Navigate to ={MAIN_ROUTE} />}/>
+    </Routes>
+  );
+});
