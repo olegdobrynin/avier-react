@@ -25,7 +25,7 @@ export default class UserStore {
   }
 
   updateArtist(artist) {
-    this._artists = this.artists.map((a) => Number(artist.id) === a.id ? artist : a);
+    this._artists = this._artists.map((a) => (artist.id === a.id ? artist : a));
   }
 
   deleteArtist(artist) {

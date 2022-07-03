@@ -32,8 +32,8 @@ export default observer(({ show, onHide, artist, setArtist, setImg }) => {
     }
     return updateArtist(id, formData)
       .then((data) => {
-        if (userLogin === user.login) {
-          user.updateArtist({ id, name: data.name, img: data.img });
+        if (userLogin === user.info.login) {
+          user.updateArtist({ id: Number(id), name: data.name, img: data.img });
         } else {
           user.deleteArtist({ id });
         }
