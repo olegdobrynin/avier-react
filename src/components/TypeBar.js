@@ -8,11 +8,11 @@ export default observer(() => {
 
   return (
     <Nav variant="pills" defaultActiveKey="0" className="my-2">
-      <Nav.Item>
+      <Nav.Item key="0">
         <Nav.Link eventKey="0" key="0" onClick={() => art.setSelectedType(0)}>Все</Nav.Link>
       </Nav.Item>
       {art.types.map((type) => (
-        <Nav.Item>
+        <Nav.Item key={type.id}>
           <Nav.Link
             eventKey={type.id}
             key={type.id}
