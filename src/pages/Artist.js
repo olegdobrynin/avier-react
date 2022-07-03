@@ -49,6 +49,13 @@ export default observer(() => {
               >
                 Редактировать
               </Button>
+              <EditArtist
+                show={editVisible}
+                onHide={() => setEditVisible(false)}
+                artist={artist}
+                setArtist={setArtist}
+                setImg={setImg}
+              />
               <Button
                 className="my-2"
                 variant="outline-danger"
@@ -56,19 +63,12 @@ export default observer(() => {
               >
                 Удалить
               </Button>
+              <DeleteArtist show={deleteVisible} onHide={() => setDeleteVisible(false)} />
             </Row>
           )}
         </Col>
       </Row>
       <ArtList/>
-      <EditArtist
-        show={editVisible}
-        onHide={() => setEditVisible(false)}
-        artist={artist}
-        setArtist={setArtist}
-        setImg={setImg}
-      />
-      <DeleteArtist show={deleteVisible} onHide={() => setDeleteVisible(false)} />
     </Container >
   );
 });
