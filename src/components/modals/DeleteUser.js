@@ -21,12 +21,7 @@ export default ({ show, onHide }) => {
     .catch((e) => alert(e.response.data.message));
 
   return (
-    <Modal
-      show={show}
-      onHide={onHide}
-      size="lg"
-      centered
-    >
+    <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
           Вы уверены?

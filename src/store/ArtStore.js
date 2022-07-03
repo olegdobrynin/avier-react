@@ -1,74 +1,76 @@
-import {makeAutoObservable} from "mobx";
+import { makeAutoObservable } from 'mobx';
 
 export default class ArtStore {
-    constructor() {
-        this._types = []
-        this._artists = []
-        this._arts = []
-        this._selectedType = {}
-        this._selectedArtist = {}
-        this._page = 1
-        this._totalCount = 0
-        this._limit = 8
-        makeAutoObservable(this)
-    }
+  constructor() {
+    this._types = [];
+    this._artists = [];
+    this._arts = [];
+    this._selectedType = {};
+    this._selectedArtist = {};
+    this._page = 1;
+    this._totalCount = 0;
+    this._limit = 8;
+    makeAutoObservable(this);
+  }
 
-    setTypes(types) {
-        this._types = types
-    }
+  setTypes(types) {
+    this._types = types;
+  }
 
-    setArtists(artists) {
-        this._artists = artists
-    }
+  setArtists(artists) {
+    this._artists = artists;
+  }
 
-    setArts(arts) {
-        this._arts = arts
-    }
+  setArts(arts) {
+    this._arts = arts;
+  }
 
-    setSelectedType(type) {
-        this.setPage(1)
-        this._selectedType = type
-    }
-    setSelectedArtist(artist) {
-        this._selectedArtist = artist
-    }
+  setSelectedType(type) {
+    this.setPage(1);
+    this._selectedType = type;
+  }
 
-    setPage(page) {
-        this._page = page
-    }
+  setSelectedArtist(artist) {
+    this._selectedArtist = artist;
+  }
 
-    setTotalCount(count) {
-        this._totalCount = count
-    }
+  setPage(page) {
+    this._page = page;
+  }
 
-    get types() {
-        return this._types
-    }
+  setTotalCount(count) {
+    this._totalCount = count;
+  }
 
-    get artists() {
-        return this._artists
-    }
+  get types() {
+    return this._types;
+  }
 
-    get arts() {
-        return this._arts
-    }
-    get selectedType() {
-        return this._selectedType
-    }
+  get artists() {
+    return this._artists;
+  }
 
-    get selectedArtist() {
-        return this._selectedArtist
-    }
+  get arts() {
+    return this._arts;
+  }
 
-    get page() {
-        return this._page
-    }
+  get selectedType() {
+    return this._selectedType;
+  }
 
-    get totalCount() {
-        return this._totalCount
-    }
+  get selectedArtist() {
+    return this._selectedArtist;
+  }
 
-    get limit() {
-        return this._limit
-    }
+  get page() {
+    return this._page;
+  }
+
+  get totalCount() {
+    return this._totalCount;
+  }
+
+  get limit() {
+    return this._limit;
+  }
 }

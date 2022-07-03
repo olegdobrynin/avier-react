@@ -21,7 +21,7 @@ export default observer(() => {
   return (
     <Container>
       <TypeBar />
-      <ArtList/>
+      <ArtList />
       {!art.totalCount || <Pages />}
     </Container>
   );

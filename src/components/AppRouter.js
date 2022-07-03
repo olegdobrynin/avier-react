@@ -18,7 +18,7 @@ export default observer(() => {
   return (
     <Routes>
       {getRoutes()}
-      <Route path="*" element={<Navigate to ={MAIN_ROUTE} />}/>
+      <Route path="*" element={<Navigate to={MAIN_ROUTE} />} />
     </Routes>
   );
 });

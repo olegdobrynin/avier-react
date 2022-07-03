@@ -45,19 +45,19 @@ export default observer(() => {
               title={user.info.login}
               menuVariant="white"
             >
-            <NavDropdown.Item onClick={() => navigate(ADMIN_ROUTE)}>Художники</NavDropdown.Item>
-            <NavDropdown.Item onClick={() => setArtVisible(true)}>Добавить арт</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item onClick={() => logOut()}>Выйти</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => navigate(ADMIN_ROUTE)}>Художники</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => setArtVisible(true)}>Добавить арт</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item onClick={() => logOut()}>Выйти</NavDropdown.Item>
             </NavDropdown>
+            <CreateArt show={artVisible} onHide={() => setArtVisible(false)} />
           </Nav>
         ) : (
           <Nav className="ml-auto">
-              <Nav.Link onClick={() => navigate(REGISTRATION_ROUTE)}>Регистрация</Nav.Link>
-              <Nav.Link onClick={() => navigate(LOGIN_ROUTE)}>Войти</Nav.Link>
+            <Nav.Link onClick={() => navigate(REGISTRATION_ROUTE)}>Регистрация</Nav.Link>
+            <Nav.Link onClick={() => navigate(LOGIN_ROUTE)}>Войти</Nav.Link>
           </Nav>
         )}
-        <CreateArt show={artVisible} onHide={() => setArtVisible(false)}/>
       </Container>
     </Navbar>
   );

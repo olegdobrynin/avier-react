@@ -45,12 +45,7 @@ export default observer(({ show, onHide, artist, setArtist, setImg }) => {
   };
 
   return (
-    <Modal
-      show={show}
-      onHide={onHide}
-      size="lg"
-      centered
-    >
+    <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
           Изменить художника
