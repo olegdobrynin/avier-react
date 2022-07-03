@@ -154,16 +154,9 @@ export default observer(({ show, onHide }) => {
           />
           <Form.Control
             value={year}
-            onChange={(e) => {
-              if (e.target.value.length <= 4) {
-                setYear(e.target.value);
-              }
-            }}
+            onChange={(e) => setYear(e.target.value)}
             className="mt-3"
             placeholder="Год"
-            type="number"
-            min="1"
-            max="2022"
             maxLength="4"
           />
           <Form.Control
