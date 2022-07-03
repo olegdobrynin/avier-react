@@ -19,6 +19,7 @@ export default observer(() => {
         .then(() => fetchInfo(user.info.id))
         .then(({ artists }) => user.setArtists(artists))
         .then(() => user.setIsAuth())
+        .catch(() => localStorage.clear())
         .finally(() => setLoading(false));
     } else {
       setLoading(false);
