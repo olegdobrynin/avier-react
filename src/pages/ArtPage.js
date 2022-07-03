@@ -12,8 +12,8 @@ export default observer(() => {
   const navigate = useNavigate();
   const { user } = useContext(Context);
   const { id } = useParams();
-  const [art, setArt] = useState({ properties: [], artists: [], imgs: [] });
-  const [img, setImg] = useState();
+  const [art, setArt] = useState({ artists: [], imgs: [], properties: [] });
+  const [img, setImg] = useState('');
   // const [editVisible, setEditVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
 
@@ -65,14 +65,14 @@ export default observer(() => {
           <Row><h5>{art.city}</h5></Row>
           <Row><h5>{art.year}</h5></Row>
           <Row>
-            {art.properties.map((property) =>
+            {art.properties.map((property) => (
               <Row key={property.id}>
                 <h6>{property.title}: {property.description}</h6>
               </Row>
-            )}
+            ))}
           </Row>
 
-          {!user.artists.some(({ id }) => art.artists.some((a) => a.id === id)) || (
+          {(user.info.role !== 'admin' && !user.artists.some(({ id }) => art.artists.some((a) => a.id === id))) || (
             <Row>
               {/* <Button
                 className='mt-2 mb-2'
@@ -80,8 +80,8 @@ export default observer(() => {
                 onClick={() => setEditVisible(true)}
                 >
                 Редактировать
-              </Button> */}
-              {/* <EditArt show={editVisible} onHide={() => setEditVisible(false)} /> */}
+              </Button>
+              <EditArt show={editVisible} onHide={() => setEditVisible(false)} /> */}
               <Button
                 className='mt-2 mb-2'
                 variant="outline-danger"

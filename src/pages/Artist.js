@@ -22,10 +22,12 @@ export default observer(() => {
   const [deleteVisible, setDeleteVisible] = useState(false);
 
   useEffect(() => {
-    fetchOneArtist(id).then((data) => {
-      setArtist(data);
-      setImg(`${process.env.REACT_APP_API_URL}artists/${data.img}`);
-    }).catch(() => navigate(MAIN_ROUTE));
+    fetchOneArtist(id)
+      .then((data) => {
+        setArtist(data);
+        setImg(`${process.env.REACT_APP_API_URL}artists/${data.img}`);
+      })
+      .catch(() => navigate(MAIN_ROUTE));
     fetchArts(null, id, art.page, null).then((data) => {
       art.setArts(data.rows);
       art.setTotalCount(data.count);
@@ -41,7 +43,7 @@ export default observer(() => {
         <Col md={4}>
           <Row><h2>{artist.name}</h2></Row>
           <Row><h6>{artist.bio}</h6></Row>
-          {!user.artists.some((artist) => artist.id === Number(id)) || (
+          {(user.info.role !== 'admin' && !user.artists.some((artist) => artist.id === Number(id))) || (
             <Row>
               <Button
                 className="my-2"
