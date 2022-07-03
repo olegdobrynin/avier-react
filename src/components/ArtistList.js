@@ -1,19 +1,18 @@
-import { observer } from 'mobx-react-lite'
-import React, { useContext, useState } from 'react'
-import { Card, Col, Row } from 'react-bootstrap'
-import { Context } from '../index'
-import ArtistCard from './ArtistCard'
-import CreateArtist from './modals/CreateArtist'
-export default observer( function ArtistList() {
+import { observer } from 'mobx-react-lite';
+import React, { useContext, useState } from 'react';
+import { Card, Col, Row } from 'react-bootstrap';
+import { Context } from '../index.js';
+import ArtistCard from './ArtistCard.js';
+import CreateArtist from './modals/CreateArtist.js';
 
-  const [artistVisible, setArtistVisible] = useState(false)
-  const {user} = useContext(Context)
-
+export default observer(() => {
+  const { user } = useContext(Context);
+  const [artistVisible, setArtistVisible] = useState(false);
 
   return (
     <Row className='d-flex pt-2'>
-      {user.artists.map(artist =>
-        <ArtistCard key={artist.id} artist={artist}/>
+      {user.artists.map((artist) =>
+        <ArtistCard key={artist.id} artist={artist} />
       )}
       <Col md={3} onClick={() => setArtistVisible(true)}>
         <Card style={{cursor: 'pointer'}} className='mb-3'>
@@ -25,8 +24,7 @@ export default observer( function ArtistList() {
           </Card.Body>
         </Card>
       </Col>
-      <CreateArtist show={artistVisible} onHide={() => setArtistVisible(false)}/>
-    </Row>  
-  )
-}
-)
+      <CreateArtist show={artistVisible} onHide={() => setArtistVisible(false)} />
+    </Row>
+  );
+});

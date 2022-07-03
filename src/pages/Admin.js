@@ -3,7 +3,6 @@ import { Button, Container, Row } from 'react-bootstrap';
 import ArtistList from '../components/ArtistList.js';
 import DeleteUser from '../components/modals/DeleteUser.js';
 
-
 export default () => {
   const [deleteVisible, setDeleteVisible] = useState(false);
 

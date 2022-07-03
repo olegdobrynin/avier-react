@@ -16,13 +16,13 @@ export default observer(() => {
       art.setArts(arts.rows);
       art.setTotalCount(arts.count);
     });
-  }, [art.selectedType, null, art.page]);
+  }, [art.selectedType, art.page]);
 
   return (
-      <Container>
-          <TypeBar />
-          <ArtList/>
-          {!art.totalCount || <Pages />}
-      </Container>
+    <Container>
+      <TypeBar />
+      <ArtList/>
+      {!art.totalCount || <Pages />}
+    </Container>
   );
 });
