@@ -6,8 +6,8 @@ import {
 import { useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../index.js';
 import ArtList from '../components/ArtList.js';
-import DeleteArtist from '../components/modals/DeleteArtist.js';
 import EditArtist from '../components/modals/EditArtist.js';
+import DeleteArtist from '../components/modals/DeleteArtist.js';
 import { fetchArts, fetchOneArtist } from '../http/artAPI.js';
 import { MAIN_ROUTE } from '../utils/consts.js';
 
@@ -61,8 +61,14 @@ export default observer(() => {
         </Col>
       </Row>
       <ArtList/>
+      <EditArtist
+        show={editVisible}
+        onHide={() => setEditVisible(false)}
+        artist={artist}
+        setArtist={setArtist}
+        setImg={setImg}
+      />
       <DeleteArtist show={deleteVisible} onHide={() => setDeleteVisible(false)} />
-      <EditArtist show={editVisible} onHide={() => setEditVisible(false)} />
     </Container >
   );
 });
