@@ -67,6 +67,9 @@ export default observer(({ show, onHide }) => {
             type="file"
             onChange={selectFile}
           />
+          <Form.Text>
+            Выберите фотографию формата JPEG или PNG, максимальный размер файла ограничен 2Мб.
+          </Form.Text>
         </Form>
       </Modal.Body>
 

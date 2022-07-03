@@ -172,6 +172,9 @@ export default observer(({ show, onHide }) => {
             multiple
             onChange={selectFiles}
           />
+          <Form.Text>
+            Выберите до 5 фотографий формата JPEG или PNG, максимальный размер файла ограничен 2Мб.
+          </Form.Text>
 
           <hr />
 
