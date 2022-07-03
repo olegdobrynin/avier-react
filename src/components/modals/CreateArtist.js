@@ -26,11 +26,12 @@ export default observer(({ show, onHide }) => {
     if (file) {
       formData.append('img', file);
     }
-    return createArtist(formData).then((artist) => {
-      user.addArtist(artist);
-      onHide();
-      navigate(`${ARTIST_ROUTE}/${artist.id}`);
-    });
+    return createArtist(formData)
+      .then((artist) => {
+        user.addArtist(artist);
+        navigate(`${ARTIST_ROUTE}/${artist.id}`);
+      })
+      .catch((e) => alert(e.response.data.message));
   };
 
   return (
