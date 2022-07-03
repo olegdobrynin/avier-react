@@ -8,7 +8,8 @@ import { Context } from '../index.js';
 import ArtList from '../components/ArtList.js';
 import EditArtist from '../components/modals/EditArtist.js';
 import DeleteArtist from '../components/modals/DeleteArtist.js';
-import { fetchArts, fetchOneArtist } from '../http/artAPI.js';
+import { fetchArts } from '../http/artAPI.js';
+import { fetchOneArtist } from '../http/artistAPI.js';
 import { MAIN_ROUTE } from '../utils/consts.js';
 
 export default observer(() => {

@@ -5,7 +5,8 @@ import { Context } from '../index.js';
 import ArtList from '../components/ArtList.js';
 import Pages from '../components/Pages.js';
 import TypeBar from '../components/TypeBar.js';
-import { fetchArts, fetchTypes } from '../http/artAPI.js';
+import { fetchArts } from '../http/artAPI.js';
+import { fetchTypes } from '../http/typeAPI.js';
 
 export default observer(() => {
   const { art } = useContext(Context);
