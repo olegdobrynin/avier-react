@@ -5,7 +5,7 @@ import {
 } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '../../index.js';
-import { createArt, fetchTypes } from '../../http/artAPI.js';
+import { createArt } from '../../http/artAPI.js';
 import { ART_ROUTE } from '../../utils/consts.js';
 
 export default observer(({ show, onHide }) => {
@@ -13,17 +13,14 @@ export default observer(({ show, onHide }) => {
   const getSampleArtist = () => ({ name: 'Xyдoжник', number: Date.now() - now });
   const navigate = useNavigate();
   const { art, user } = useContext(Context);
+  const [type, setType] = useState('');
   const [name, setName] = useState('');
-  const [files, setFiles] = useState([]);
   const [about, setAbout] = useState('');
-  const [year, setYear] = useState('');
   const [city, setCity] = useState('');
-  const [properties, setProperties] = useState([]);
+  const [year, setYear] = useState('');
   const [artists, setArtists] = useState([getSampleArtist()]);
-
-  useEffect(() => {
-    fetchTypes().then((data) => art.setTypes(data));
-  }, []);
+  const [properties, setProperties] = useState([]);
+  const [files, setFiles] = useState([]);
 
   const addArtist = () => {
     setArtists([...artists, getSampleArtist()]);
@@ -57,7 +54,7 @@ export default observer(({ show, onHide }) => {
     const formData = new FormData();
     formData.set('name', name);
     formData.set('year', year);
-    formData.set('typeId', art.selectedType.id);
+    formData.set('typeId', type.id);
     formData.set('about', about);
     formData.set('city', city);
     formData.set('properties', JSON.stringify(properties));
@@ -95,6 +92,7 @@ export default observer(({ show, onHide }) => {
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">Добавить объект</Modal.Title>
       </Modal.Header>
+
       <Modal.Body>
         <Form>
           <div className="d-flex flex-row">
@@ -120,11 +118,11 @@ export default observer(({ show, onHide }) => {
               || <Button className="mb-2" onClick={addArtist}>+</Button>}
           </div>
           <Dropdown className="mt-2 mb-2">
-            <Dropdown.Toggle>{art.selectedType.name || 'Тип'}</Dropdown.Toggle>
+            <Dropdown.Toggle>{type.name || 'Тип'}</Dropdown.Toggle>
             <Dropdown.Menu>
               {art.types.map((type) => (
                 <Dropdown.Item
-                  onClick={() => art.setSelectedType(type)}
+                  onClick={() => setType(type)}
                   key={type.id}
                 >
                   {type.name}
@@ -201,6 +199,7 @@ export default observer(({ show, onHide }) => {
           </div>
         </Form>
       </Modal.Body>
+
       <Modal.Footer>
         <Button onClick={onHide}>Закрыть</Button>
         <LoadingButton />
