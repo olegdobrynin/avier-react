@@ -97,7 +97,7 @@ export default observer(({ show, onHide }) => {
         <Form>
           <div className="d-flex flex-row">
             {artists.map(({ name, number }) => (
-              <Dropdown className="mb-2 me-2">
+              <Dropdown key={number} className="mb-2 me-2">
                 <Dropdown.Toggle>{name}</Dropdown.Toggle>
                 <Dropdown.Menu>
                   {user.artists
