@@ -11,16 +11,14 @@ export default ({ show, onHide }) => {
   const { id, login } = user.info;
   const [password, setPassword] = useState('');
 
-  const delUser = () => {
-    auth(login, password).then(() => {
-      deleteUser(id).then(() => {
-        user.clear();
-        localStorage.clear();
-        onHide();
-        navigate(MAIN_ROUTE);
-      });
-    }).catch((e) => alert(e.response.data.message));
-  };
+  const delUser = () => auth(login, password)
+    .then(() => deleteUser(id))
+    .then(() => {
+      user.clear();
+      localStorage.clear();
+      navigate(MAIN_ROUTE);
+    })
+    .catch((e) => alert(e.response.data.message));
 
   return (
     <Modal
@@ -37,13 +35,17 @@ export default ({ show, onHide }) => {
 
       <Modal.Body>
         <Form.Group controlId="password">
-          <Form.Label>Данное действие необратимо!</Form.Label>
+          <Form.Label>Внимание! Данное действие необратимо!</Form.Label>
           <Form.Control
             type="password"
             placeholder="Для удаления пользователя введите пароль..."
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <Form.Text>
+            Перед удалением убедитесь в том, что у пользователя не осталось художников.
+            Вы можете передать права другому пользователю в форме редактирования художника.
+          </Form.Text>
         </Form.Group>
       </Modal.Body>
 
