@@ -81,6 +81,7 @@ export default observer(() => {
                 >
                 Редактировать
               </Button> */}
+              {/* <EditArt show={editVisible} onHide={() => setEditVisible(false)} /> */}
               <Button
                 className='mt-2 mb-2'
                 variant="outline-danger"
@@ -88,12 +89,11 @@ export default observer(() => {
               >
                 Удалить
               </Button>
+              <DeleteArt show={deleteVisible} onHide={() => setDeleteVisible(false)} />
             </Row>
           )}
         </Col>
       </Row>
-      {/* <EditArt show={editVisible} onHide={() => setEditVisible(false)} /> */}
-      <DeleteArt show={deleteVisible} onHide={() => setDeleteVisible(false)} />
     </Container>
   );
 });
