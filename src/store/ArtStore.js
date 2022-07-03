@@ -5,7 +5,7 @@ export default class ArtStore {
     this._types = [];
     this._artists = [];
     this._arts = [];
-    this._selectedType = {};
+    this._selectedType = undefined;
     this._selectedArtist = {};
     this._page = 1;
     this._totalCount = 0;
@@ -26,7 +26,7 @@ export default class ArtStore {
   }
 
   setSelectedType(type) {
-    this.setPage(1);
+    this._page = 1;
     this._selectedType = type;
   }
 

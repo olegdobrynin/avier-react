@@ -9,21 +9,20 @@ import {
 } from '../utils/consts.js';
 
 export default observer(() => {
-    const navigate = useNavigate();
-    const { art, user } = useContext(Context);
-    const [artVisible, setArtVisible] = useState(false);
-    art.setSelectedType(0);
+  const navigate = useNavigate();
+  const { art, user } = useContext(Context);
+  const [artVisible, setArtVisible] = useState(false);
 
-    const logOut = () => {
-      user.clear();
-      localStorage.clear();
-      navigate(MAIN_ROUTE);
-    };
+  const logOut = () => {
+    user.clear();
+    localStorage.clear();
+    navigate(MAIN_ROUTE);
+  };
 
-    const logo = () => {
-      art.setSelectedType(0);
-      navigate(MAIN_ROUTE);
-    };
+  const logo = () => {
+    art.setSelectedType();
+    navigate(MAIN_ROUTE);
+  };
 
   return (
     <Navbar bg="light" variant="light" >

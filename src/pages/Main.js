@@ -13,7 +13,7 @@ export default observer(() => {
 
   useEffect(() => {
     fetchTypes().then((types) => art.setTypes(types));
-    fetchArts(art.selectedType.id, null, art.page, art.limit).then((arts) => {
+    fetchArts(art.selectedType, null, art.page, art.limit).then((arts) => {
       art.setArts(arts.rows);
       art.setTotalCount(arts.count);
     });
