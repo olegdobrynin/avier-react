@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import { Context } from '../../index.jsx';
 import { deleteArtist } from '../../http/artistAPI.js';
 import { MAIN_ROUTE } from '../../utils/consts.js';
 
-export default ({ show, onHide }) => {
+export default observer(({ show, onHide }) => {
   const navigate = useNavigate();
   const { user } = useContext(Context);
   const { id } = useParams();
@@ -32,4 +33,4 @@ export default ({ show, onHide }) => {
       </Modal.Footer>
     </Modal>
   );
-};
+});
