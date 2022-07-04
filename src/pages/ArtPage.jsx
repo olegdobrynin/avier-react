@@ -37,7 +37,7 @@ export default observer(() => {
             {art.imgs.map((img) => (
               <Col
                 key={img}
-                md={3}
+                xs={3}
                 className="mt-2"
                 onClick={() => {setImg(`${process.env.REACT_APP_API_URL}arts/${img}`)}}
               >

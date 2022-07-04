@@ -44,6 +44,7 @@ export default observer(() => {
             <NavDropdown
               className="ml-auto"
               id="nav-dropdown"
+              align="end"
               title={user.info.login}
               menuVariant="white"
             >
