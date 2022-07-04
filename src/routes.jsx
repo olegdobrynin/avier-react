@@ -11,11 +11,14 @@ import {
 } from './utils/consts.js';
 import Profile from './pages/Profile.jsx';
 
-export const authRoutes = [
+export const adminRoutes = [
   {
     path: ADMIN_ROUTE,
     element: <Admin />,
-  },  
+  },
+];
+
+export const authRoutes = [
   {
     path: USER_ARTIST_ROUTE,
     element: <UserArtists />,

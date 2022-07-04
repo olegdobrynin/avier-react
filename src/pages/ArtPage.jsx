@@ -3,6 +3,7 @@ import { Button, Col, Container, Image, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../index.jsx';
+import MarkCheckbox from '../components/MarkCheckbox.jsx';
 import { fetchOneArt } from '../http/artAPI.js';
 import { ARTIST_ROUTE, MAIN_ROUTE } from '../utils/consts.js';
 // import EditArt from '../components/modals/EditArt.jsx';
@@ -14,6 +15,7 @@ export default observer(() => {
   const { id } = useParams();
   const [art, setArt] = useState({ artists: [], imgs: [], properties: [] });
   const [img, setImg] = useState('');
+  const [checked, setChecked] = useState(false);
   // const [editVisible, setEditVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
 
@@ -48,6 +50,7 @@ export default observer(() => {
           </Row>
         </Col>
         <Col md={4}>
+        <MarkCheckbox artId={id} checked={checked} setChecked={setChecked} />
           <Row>
             {art.artists.map((artist) => (
               <Row
@@ -72,7 +75,9 @@ export default observer(() => {
             ))}
           </Row>
 
-          {(user.info.role !== 'admin' && !user.artists.some(({ id }) => art.artists.some((a) => a.id === id))) || (
+          {!(
+            user.info.role === 'admin' || user.artists.some(({ id }) => art.artists.some((a) => a.id === id))
+          ) || (
             <Row>
               {/* <Button
                 className='mt-2 mb-2'

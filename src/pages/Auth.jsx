@@ -20,6 +20,8 @@ export default observer(() => {
         ? await auth(login, password)
         : await registration(login, password);
 
+      setLogin('');
+      setPassword('');
       user.setIsAuth();
       user.setInfo(data);
       const info = await fetchInfo(data.id);

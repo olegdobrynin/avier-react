@@ -27,11 +27,11 @@ export default observer(({ show, onHide }) => {
   };
 
   const changeArtist = (artistId, name, number) => {
-    setArtists(artists.map((i) => (i.number === number ? { ...i, artistId, name } : i)));
+    setArtists(artists.map((a) => (a.number === number ? { ...a, artistId, name } : a)));
   };
 
   const removeArtist = (number) => {
-    setArtists(artists.filter((i) => i.number !== number));
+    setArtists(artists.filter((a) => a.number !== number));
   };
 
   const addProperty = () => {
@@ -39,11 +39,11 @@ export default observer(({ show, onHide }) => {
   };
 
   const changeProperty = (key, value, number) => {
-    setProperties(properties.map((i) => (i.number === number ? { ...i, [key]: value } : i)));
+    setProperties(properties.map((p) => (p.number === number ? { ...p, [key]: value } : p)));
   };
 
   const removeProperty = (number) => {
-    setProperties(properties.filter((i) => i.number !== number));
+    setProperties(properties.filter((p) => p.number !== number));
   };
 
   const selectFiles = (e) => {
@@ -63,8 +63,18 @@ export default observer(({ show, onHide }) => {
 
     return createArt(formData)
       .then(({ id }) => {
-        onHide();
-        setTimeout(() => navigate(`${ART_ROUTE}/${id}`), 100);
+        setTimeout(() => {
+          onHide();
+          navigate(`${ART_ROUTE}/${id}`);
+          setType('');
+          setYear('');
+          setAbout('');
+          setCity('');
+          setName('');
+          setArtists([getSampleArtist()]);
+          setFiles([]);
+          setProperties([]);
+        }, 100);
       })
       .catch((err) => alert(err.response.data.message));
   };
