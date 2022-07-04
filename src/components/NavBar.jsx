@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Context } from '../index.jsx';
 import CreateArt from './modals/CreateArt.jsx';
 import {
-  ADMIN_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE, USER_ARTIST_ROUTE
+  ADMIN_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE, USER_ARTIST_ROUTE, PROFILE_ROUTE
 } from '../utils/consts.js';
 
 export default observer(() => {
@@ -48,6 +48,7 @@ export default observer(() => {
               <NavDropdown.Item onClick={() => navigate(USER_ARTIST_ROUTE)}>Художники</NavDropdown.Item>
               <NavDropdown.Item onClick={() => setArtVisible(true)}>Добавить арт</NavDropdown.Item>
               <NavDropdown.Divider />
+              <NavDropdown.Item onClick={() => navigate(PROFILE_ROUTE)}>Настройки</NavDropdown.Item>
               <NavDropdown.Item onClick={() => logOut()}>Выйти</NavDropdown.Item>
             </NavDropdown>
             <CreateArt show={artVisible} onHide={() => setArtVisible(false)} />

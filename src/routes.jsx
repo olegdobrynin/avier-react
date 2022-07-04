@@ -7,8 +7,9 @@ import Artist from './pages/Artist.jsx';
 import Main from './pages/Main.jsx';
 import Mark from './pages/Mark.jsx';
 import {
-  MAIN_ROUTE, MARK_ROUTE, ADMIN_ROUTE, LOGIN_ROUTE, ART_ROUTE, ARTIST_ROUTE, REGISTRATION_ROUTE, USER_ARTIST_ROUTE
+  MAIN_ROUTE, MARK_ROUTE, ADMIN_ROUTE, LOGIN_ROUTE, ART_ROUTE, ARTIST_ROUTE, REGISTRATION_ROUTE, USER_ARTIST_ROUTE, PROFILE_ROUTE
 } from './utils/consts.js';
+import Profile from './pages/Profile.jsx';
 
 export const authRoutes = [
   {
@@ -22,6 +23,10 @@ export const authRoutes = [
   {
     path: MARK_ROUTE,
     element: <Mark />,
+  },
+  {
+    path: PROFILE_ROUTE,
+    element: <Profile />,
   },
 ];
 
