@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import { Context } from '../../index.js';
+import { Context } from '../../index.jsx';
 import { updateArtist } from '../../http/artistAPI.js';
 
 export default observer(({ show, onHide, artist, setArtist, setImg }) => {

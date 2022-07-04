@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, Col, Dropdown, Form, Modal, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Context } from '../../index.js';
+import { Context } from '../../index.jsx';
 import {
   createArt, fetchArtists, fetchOneArt, fetchTypes,
 } from '../../http/artAPI.js';

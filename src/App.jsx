@@ -3,9 +3,9 @@ import { Spinner } from 'react-bootstrap';
 import { BrowserRouter } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import './App.css';
-import { Context } from './index.js';
-import NavBar from './components/NavBar.js';
-import AppRouter from './components/AppRouter.js';
+import { Context } from './index.jsx';
+import NavBar from './components/NavBar.jsx';
+import AppRouter from './components/AppRouter.jsx';
 import { check, fetchInfo } from './http/userAPI.js';
 
 export default observer(() => {

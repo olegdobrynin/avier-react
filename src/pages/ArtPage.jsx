@@ -2,11 +2,11 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect, useContext, useState } from 'react';
 import { Button, Col, Container, Image, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Context } from '../index.js';
+import { Context } from '../index.jsx';
 import { fetchOneArt } from '../http/artAPI.js';
 import { ARTIST_ROUTE, MAIN_ROUTE } from '../utils/consts.js';
-// import EditArt from '../components/modals/EditArt.js';
-import DeleteArt from '../components/modals/DeleteArt.js';
+// import EditArt from '../components/modals/EditArt.jsx';
+import DeleteArt from '../components/modals/DeleteArt.jsx';
 
 export default observer(() => {
   const navigate = useNavigate();

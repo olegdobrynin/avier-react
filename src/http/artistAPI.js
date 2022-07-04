@@ -1,7 +1,7 @@
 import { $authHost, $host } from './index.js';
 
 export const createArtist = async (art) => {
-  const {data} = await $authHost.post('api/artist', art);
+  const { data } = await $authHost.post('api/artist', art);
   return data;
 };
 

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { Context } from '../../index.js';
+import { Context } from '../../index.jsx';
 import { auth, deleteUser } from '../../http/userAPI.js';
 import { MAIN_ROUTE } from '../../utils/consts.js';
 
@@ -20,6 +20,10 @@ export default ({ show, onHide }) => {
     })
     .catch((e) => alert(e.response.data.message));
 
+  const handleKeyPress = (target) => target.charCode === 13
+    ? delUser()
+    : null;
+
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
@@ -33,9 +37,11 @@ export default ({ show, onHide }) => {
           <Form.Label>Внимание! Данное действие необратимо!</Form.Label>
           <Form.Control
             type="password"
+            autoComplete="current-password"
             placeholder="Для удаления пользователя введите пароль..."
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyPress={handleKeyPress}
           />
           <Form.Text>
             Перед удалением убедитесь в том, что у пользователя не осталось художников.

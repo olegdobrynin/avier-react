@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React , { useContext, useState } from 'react';
 import { Button, Card, Container, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Context } from '../index.js';
+import { Context } from '../index.jsx';
 import { auth, fetchInfo, registration } from '../http/userAPI.js';
 import { LOGIN_ROUTE, MAIN_ROUTE } from '../utils/consts.js';
 
@@ -41,8 +41,9 @@ export default observer(() => {
           <Form.Group className="mb-3" controlId="login">
             <Form.Label>Логин</Form.Label>
             <Form.Control
-              type="login"
+              type="text"
               placeholder="Введите логин.."
+              autoComplete="username"
               value={login}
               onChange={(e) => setLogin(e.target.value)}
               onKeyPress={handleKeyPress}
@@ -53,6 +54,7 @@ export default observer(() => {
             <Form.Control
               type="password"
               placeholder="Введите пароль.."
+              autoComplete={isLogin ? 'current-password' : 'new-password'}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyPress={handleKeyPress}

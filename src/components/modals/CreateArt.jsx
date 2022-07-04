@@ -4,7 +4,7 @@ import {
   Button, Col, Dropdown, Form, Modal, Row,
 } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { Context } from '../../index.js';
+import { Context } from '../../index.jsx';
 import { createArt } from '../../http/artAPI.js';
 import { ART_ROUTE } from '../../utils/consts.js';
 

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Context } from '../../index.js';
+import { Context } from '../../index.jsx';
 import { deleteArtist } from '../../http/artistAPI.js';
 import { MAIN_ROUTE } from '../../utils/consts.js';
 

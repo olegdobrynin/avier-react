@@ -4,10 +4,10 @@ import {
   Button, Col, Container, Image, Row,
 } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Context } from '../index.js';
-import ArtList from '../components/ArtList.js';
-import EditArtist from '../components/modals/EditArtist.js';
-import DeleteArtist from '../components/modals/DeleteArtist.js';
+import { Context } from '../index.jsx';
+import ArtList from '../components/ArtList.jsx';
+import EditArtist from '../components/modals/EditArtist.jsx';
+import DeleteArtist from '../components/modals/DeleteArtist.jsx';
 import { fetchArts } from '../http/artAPI.js';
 import { fetchOneArtist } from '../http/artistAPI.js';
 import { MAIN_ROUTE } from '../utils/consts.js';

@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react-lite';
 import React, { useContext, useState } from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
-import { Context } from '../index.js';
-import ArtistCard from './ArtistCard.js';
-import CreateArtist from './modals/CreateArtist.js';
+import { Context } from '../index.jsx';
+import ArtistCard from './ArtistCard.jsx';
+import CreateArtist from './modals/CreateArtist.jsx';
 
 export default observer(() => {
   const { user } = useContext(Context);

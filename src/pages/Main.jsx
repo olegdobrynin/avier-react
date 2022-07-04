@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect } from 'react'
 import { Container } from 'react-bootstrap';
-import { Context } from '../index.js';
-import ArtList from '../components/ArtList.js';
-import Pages from '../components/Pages.js';
-import TypeBar from '../components/TypeBar.js';
+import { Context } from '../index.jsx';
+import ArtList from '../components/ArtList.jsx';
+import Pages from '../components/Pages.jsx';
+import TypeBar from '../components/TypeBar.jsx';
 import { fetchArts } from '../http/artAPI.js';
 import { fetchTypes } from '../http/typeAPI.js';
 

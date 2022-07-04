@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Row } from 'react-bootstrap';
-import { Context } from '../index.js';
-import ArtItem from './ArtItem.js';
+import { Context } from '../index.jsx';
+import ArtItem from './ArtItem.jsx';
 
 export default observer(() => {
   const {art} = useContext(Context);

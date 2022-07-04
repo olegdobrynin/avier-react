@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React, { useContext } from 'react';
 import { Pagination } from 'react-bootstrap';
-import { Context } from '../index.js';
+import { Context } from '../index.jsx';
 
 export default observer(() => {
   const { art } = useContext(Context);

@@ -2,7 +2,7 @@ import React, { createContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import App from './App.js';
+import App from './App.jsx';
 import UserStore from './store/UserStore.js';
 import ArtStore from './store/ArtStore.js';
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Container, Row } from 'react-bootstrap';
-import ArtistList from '../components/ArtistList.js';
-import DeleteUser from '../components/modals/DeleteUser.js';
+import ArtistList from '../components/ArtistList.jsx';
+import DeleteUser from '../components/modals/DeleteUser.jsx';
 
 export default () => {
   const [deleteVisible, setDeleteVisible] = useState(false);

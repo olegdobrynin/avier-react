@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { Context } from '../index.js';
-import CreateArt from './modals/CreateArt.js';
+import { Context } from '../index.jsx';
+import CreateArt from './modals/CreateArt.jsx';
 import {
   ADMIN_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE,
 } from '../utils/consts.js';
