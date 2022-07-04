@@ -1,9 +1,9 @@
-import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect, useState } from 'react';
 import {
   Button, Col, Container, Image, Row,
 } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import { Context } from '../index.jsx';
 import ArtList from '../components/ArtList.jsx';
 import EditArtist from '../components/modals/EditArtist.jsx';
@@ -32,7 +32,7 @@ export default observer(() => {
       art.setArts(data.rows);
       art.setTotalCount(data.count);
     });
-  }, [art.page]);
+  }, [art, art.page, id, navigate]);
 
   return (
     <Container className="mt-3">

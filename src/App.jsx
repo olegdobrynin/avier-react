@@ -24,7 +24,7 @@ export default observer(() => {
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [user]);
 
   return loading
     ? (<Spinner animation={"grow"}/>)

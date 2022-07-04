@@ -17,7 +17,7 @@ export default observer(() => {
       art.setArts(arts.rows);
       art.setTotalCount(arts.count);
     });
-  }, [art.selectedType, art.page]);
+  }, [art, art.page, art.selectedType]);
 
   return (
     <Container>

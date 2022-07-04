@@ -1,7 +1,7 @@
-import { observer } from 'mobx-react-lite';
 import React, { useEffect, useContext, useState } from 'react';
 import { Button, Col, Container, Image, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import { Context } from '../index.jsx';
 import { fetchOneArt } from '../http/artAPI.js';
 import { ARTIST_ROUTE, MAIN_ROUTE } from '../utils/consts.js';
@@ -24,7 +24,7 @@ export default observer(() => {
         setImg(`${process.env.REACT_APP_API_URL}arts/${data.img}`);
       })
       .catch(() => navigate(MAIN_ROUTE));
-  }, []);
+  }, [id, navigate]);
 
   return (
     <Container className='mt-3'>
