@@ -1,7 +1,7 @@
-import { observer } from 'mobx-react-lite';
 import React, { useContext, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import { Context } from '../../index.jsx';
 import { createArtist } from '../../http/artistAPI.js';
 import { ARTIST_ROUTE } from '../../utils/consts.js';
@@ -29,7 +29,8 @@ export default observer(({ show, onHide }) => {
     return createArtist(formData)
       .then((artist) => {
         user.addArtist(artist);
-        navigate(`${ARTIST_ROUTE}/${artist.id}`);
+        onHide();
+        setTimeout(() => navigate(`${ARTIST_ROUTE}/${artist.id}`), 100);
       })
       .catch((e) => alert(e.response.data.message));
   };

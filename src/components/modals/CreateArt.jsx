@@ -1,9 +1,9 @@
-import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect, useState } from 'react';
 import {
   Button, Col, Dropdown, Form, Modal, Row,
 } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import { Context } from '../../index.jsx';
 import { createArt } from '../../http/artAPI.js';
 import { ART_ROUTE } from '../../utils/consts.js';
@@ -64,7 +64,7 @@ export default observer(({ show, onHide }) => {
     return createArt(formData)
       .then(({ id }) => {
         onHide();
-        navigate(`${ART_ROUTE}/${id}`);
+        setTimeout(() => navigate(`${ART_ROUTE}/${id}`), 100);
       })
       .catch((err) => alert(err.response.data.message));
   };
