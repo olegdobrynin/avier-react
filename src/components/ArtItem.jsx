@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
 import { Card, Col } from 'react-bootstrap';
+import MarkCheckbox from './MarkCheckbox.jsx';
 import { ART_ROUTE } from '../utils/consts.js';
 
 export default observer(({ art }) => {
   const navigate = useNavigate();
+  const [checked, setChecked] = useState(false);
 
   return (
     <Col md={3}>
@@ -28,6 +30,7 @@ export default observer(({ art }) => {
           </Card.Body>
         </Card.Link>
       </Card>
+      <MarkCheckbox artId={art.id} checked={checked} setChecked={setChecked} />
     </Col>
   );
 });
