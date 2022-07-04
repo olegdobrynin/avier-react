@@ -27,14 +27,16 @@ export default observer(() => {
   return (
     <Navbar bg="light" variant="light" >
       <Container>
-        <Navbar.Brand onClick={() => logo() }>
-          <img
-            src="/logo330x100.png"
-            width="132"
-            height="40"
-            className="d-inline-block align-top"
-            alt="Avier"
-          />
+        <Navbar.Brand>
+          <Nav.Link tabIndex="0" onClick={() => logo()}>
+            <img
+              src="/logo330x100.png"
+              width="132"
+              height="40"
+              className="d-inline-block align-top"
+              alt="Avier"
+            />
+          </Nav.Link>
         </Navbar.Brand>
 
         {user.isAuth ? (
