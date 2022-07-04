@@ -8,11 +8,11 @@ import { ARTIST_ROUTE } from '../../utils/consts.js';
 
 export default observer(({ show, onHide }) => {
   const navigate = useNavigate();
-  const [name, setName] = useState('');
-  const [file, setFile] = useState(null);
-  const [bio, setBio] = useState('');
   const { user } = useContext(Context);
   const userId = user.info.id;
+  const [name, setName] = useState('');
+  const [bio, setBio] = useState('');
+  const [file, setFile] = useState(null);
 
   const selectFile = (e) => {
     setFile(e.target.files[0]);
@@ -28,9 +28,14 @@ export default observer(({ show, onHide }) => {
     }
     return createArtist(formData)
       .then((artist) => {
-        user.addArtist(artist);
-        onHide();
-        setTimeout(() => navigate(`${ARTIST_ROUTE}/${artist.id}`), 100);
+        setTimeout(() => {
+          setName('');
+          setBio('');
+          setFile(null);
+          navigate(`${ARTIST_ROUTE}/${artist.id}`);
+          user.addArtist(artist);
+          onHide();
+        }, 100);
       })
       .catch((e) => alert(e.response.data.message));
   };
