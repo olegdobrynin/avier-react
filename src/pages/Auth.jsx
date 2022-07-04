@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React , { useContext, useState } from 'react';
 import { Button, Card, Container, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Context } from '../index.js';
+import { Context } from '../index.jsx';
 import { auth, fetchInfo, registration } from '../http/userAPI.js';
 import { LOGIN_ROUTE, MAIN_ROUTE } from '../utils/consts.js';
 
@@ -20,13 +20,13 @@ export default observer(() => {
         ? await auth(login, password)
         : await registration(login, password);
 
-      user.setIsAuth()
-      user.setInfo(data)
+      user.setIsAuth();
+      user.setInfo(data);
       const info = await fetchInfo(data.id);
-      user.setArtists(info.artists)
+      user.setArtists(info.artists);
       navigate(MAIN_ROUTE);
     } catch (e) {
-      alert(e.response.data.message)
+      alert(e.response.data.message);
     }
   };
 
@@ -35,16 +35,15 @@ export default observer(() => {
     : null;
 
   return (
-    <Container
-      className='d-flex justify-content-center align-item-center py-5'
-    >
+    <Container className='d-flex justify-content-center align-item-center py-5'>
       <Card className='p-3' style={{maxWidth:600, width: document.documentElement.clientWidth}}>
         <Form className='d-flex flex-column'>
           <Form.Group className="mb-3" controlId="login">
             <Form.Label>Логин</Form.Label>
             <Form.Control
-              type="login"
+              type="text"
               placeholder="Введите логин.."
+              autoComplete="username"
               value={login}
               onChange={(e) => setLogin(e.target.value)}
               onKeyPress={handleKeyPress}
@@ -55,6 +54,7 @@ export default observer(() => {
             <Form.Control
               type="password"
               placeholder="Введите пароль.."
+              autoComplete={isLogin ? 'current-password' : 'new-password'}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyPress={handleKeyPress}

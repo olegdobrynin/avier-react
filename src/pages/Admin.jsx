@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Container, Row } from 'react-bootstrap';
-import ArtistList from '../components/ArtistList.js';
-import DeleteUser from '../components/modals/DeleteUser.js';
+import { observer } from 'mobx-react-lite';
+import ArtistList from '../components/ArtistList.jsx';
+import DeleteUser from '../components/modals/DeleteUser.jsx';
 
-
-export default () => {
+export default observer(() => {
   const [deleteVisible, setDeleteVisible] = useState(false);
 
   return (
@@ -24,4 +24,4 @@ export default () => {
       <DeleteUser show={deleteVisible} onHide={() => setDeleteVisible(false)} />
     </Container>
   );
-};
+});

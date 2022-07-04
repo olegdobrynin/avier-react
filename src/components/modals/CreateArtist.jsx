@@ -1,8 +1,8 @@
-import { observer } from 'mobx-react-lite';
 import React, { useContext, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { Context } from '../../index.js';
+import { observer } from 'mobx-react-lite';
+import { Context } from '../../index.jsx';
 import { createArtist } from '../../http/artistAPI.js';
 import { ARTIST_ROUTE } from '../../utils/consts.js';
 
@@ -26,20 +26,17 @@ export default observer(({ show, onHide }) => {
     if (file) {
       formData.append('img', file);
     }
-    return createArtist(formData).then((artist) => {
-      user.addArtist(artist);
-      onHide();
-      navigate(`${ARTIST_ROUTE}/${artist.id}`);
-    });
+    return createArtist(formData)
+      .then((artist) => {
+        user.addArtist(artist);
+        onHide();
+        setTimeout(() => navigate(`${ARTIST_ROUTE}/${artist.id}`), 100);
+      })
+      .catch((e) => alert(e.response.data.message));
   };
 
   return (
-    <Modal
-      show={show}
-      onHide={onHide}
-      size="lg"
-      centered
-    >
+    <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
           Добавить художника
@@ -67,6 +64,9 @@ export default observer(({ show, onHide }) => {
             type="file"
             onChange={selectFile}
           />
+          <Form.Text>
+            Выберите фотографию формата JPEG или PNG, максимальный размер файла ограничен 2Мб.
+          </Form.Text>
         </Form>
       </Modal.Body>
 

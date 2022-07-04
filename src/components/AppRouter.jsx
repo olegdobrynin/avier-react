@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { Context } from '../index.js';
-import { authRoutes, publicRoutes } from '../routes.js';
+import { Context } from '../index.jsx';
+import { authRoutes, publicRoutes } from '../routes.jsx';
 import { LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from '../utils/consts.js';
 
 export default observer(() => {
@@ -18,7 +18,7 @@ export default observer(() => {
   return (
     <Routes>
       {getRoutes()}
-      <Route path="*" element={<Navigate to ={MAIN_ROUTE} />}/>
+      <Route path="*" element={<Navigate to={MAIN_ROUTE} />} />
     </Routes>
   );
 });

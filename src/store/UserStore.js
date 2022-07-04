@@ -24,6 +24,10 @@ export default class UserStore {
     this._artists.push(artist);
   }
 
+  updateArtist(artist) {
+    this._artists = this._artists.map((a) => (artist.id === a.id ? artist : a));
+  }
+
   deleteArtist(artist) {
     this._artists = this._artists.filter(({ id }) => Number(artist.id) !== id);
   }
