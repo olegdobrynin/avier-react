@@ -1,18 +1,23 @@
 import React from 'react';
 import Admin from './pages/Admin.jsx';
+import UserArtists from './pages/UserArtists.jsx';
 import Auth from './pages/Auth.jsx';
 import ArtPage from './pages/ArtPage.jsx';
 import Artist from './pages/Artist.jsx';
 import Main from './pages/Main.jsx';
 import Mark from './pages/Mark.jsx';
 import {
-  MAIN_ROUTE, MARK_ROUTE, ADMIN_ROUTE, LOGIN_ROUTE, ART_ROUTE, ARTIST_ROUTE, REGISTRATION_ROUTE,
+  MAIN_ROUTE, MARK_ROUTE, ADMIN_ROUTE, LOGIN_ROUTE, ART_ROUTE, ARTIST_ROUTE, REGISTRATION_ROUTE, USER_ARTIST_ROUTE
 } from './utils/consts.js';
 
 export const authRoutes = [
   {
     path: ADMIN_ROUTE,
     element: <Admin />,
+  },  
+  {
+    path: USER_ARTIST_ROUTE,
+    element: <UserArtists />,
   },
   {
     path: MARK_ROUTE,
