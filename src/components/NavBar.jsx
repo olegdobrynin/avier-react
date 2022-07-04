@@ -40,11 +40,12 @@ export default observer(() => {
         {user.isAuth ? (
           <Nav className="ml-auto">
             <NavDropdown
+              className="ml-auto"
               id="nav-dropdown"
               title={user.info.login}
               menuVariant="white"
             >
-              {(user.info.role !== 'ADMIN') || (<NavDropdown.Item onClick={() => navigate(ADMIN_ROUTE)}>Админ</NavDropdown.Item>)}
+              {(user.info.role !== 'admin') || (<NavDropdown.Item onClick={() => navigate(ADMIN_ROUTE)}>Админ</NavDropdown.Item>)}
               <NavDropdown.Item onClick={() => navigate(USER_ARTIST_ROUTE)}>Художники</NavDropdown.Item>
               <NavDropdown.Item onClick={() => setArtVisible(true)}>Добавить арт</NavDropdown.Item>
               <NavDropdown.Divider />
