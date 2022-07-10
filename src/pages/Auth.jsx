@@ -47,6 +47,7 @@ export default observer(() => {
               type="text"
               placeholder="Введите логин.."
               autoComplete="username"
+              autoFocus
               value={login}
               onChange={(e) => setLogin(e.target.value)}
               onKeyPress={handleKeyPress}

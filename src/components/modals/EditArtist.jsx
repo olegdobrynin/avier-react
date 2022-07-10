@@ -55,6 +55,7 @@ export default observer(({
       <Modal.Body>
         <Form>
           <Form.Control
+            autoFocus
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="mt-3"
@@ -75,7 +76,12 @@ export default observer(({
             placeholder="Введите логин..."
           />
           <Form.Text muted>Для передачи прав на художника введите логин пользователя.</Form.Text>
-          <Form.Control className="mt-1" type="file" onChange={selectFile} />
+          <Form.Control
+            className="mt-1"
+            type="file"
+            accept="image/jpeg,image/png"
+            onChange={selectFile}
+          />
           <Form.Text>
             Выберите фотографию формата JPEG или PNG, максимальный размер файла ограничен 2Мб.
           </Form.Text>

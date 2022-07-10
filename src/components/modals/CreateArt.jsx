@@ -48,7 +48,11 @@ export default observer(({ show, onHide }) => {
   };
 
   const selectFiles = (e) => {
-    setFiles([...e.target.files]);
+    if (e.target.files.length > 5) {
+      alert('Слишком много файлов!');
+    } else {
+      setFiles([...e.target.files]);
+    }
   };
 
   const addArt = () => {
@@ -170,7 +174,13 @@ export default observer(({ show, onHide }) => {
             placeholder="Год"
             maxLength="4"
           />
-          <Form.Control className="mt-3" type="file" multiple onChange={selectFiles} />
+          <Form.Control
+            className="mt-3"
+            accept="image/jpeg,image/png"
+            type="file"
+            multiple
+            onChange={selectFiles}
+          />
           <Form.Text>
             Выберите до 5 фотографий формата JPEG или PNG, максимальный размер файла ограничен 2Мб.
           </Form.Text>
