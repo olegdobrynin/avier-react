@@ -3,8 +3,11 @@ import { makeAutoObservable } from 'mobx';
 export default class UserStore {
   constructor() {
     this._isAuth = false;
-    this._info = [];
+    this._id = undefined;
+    this._login = undefined;
+    this._role = 'guest';
     this._artists = [];
+    this._marks = [];
     makeAutoObservable(this);
   }
 
@@ -12,8 +15,10 @@ export default class UserStore {
     this._isAuth = !this._isAuth;
   }
 
-  setInfo(info) {
-    this._info = info;
+  setInfo({ id, login, role }) {
+    this._id = id;
+    this._login = login;
+    this._role = role;
   }
 
   setArtists(artists) {
@@ -34,7 +39,9 @@ export default class UserStore {
 
   clear() {
     this._isAuth = false;
-    this._info = [];
+    this._id = undefined;
+    this._login = undefined;
+    this._role = 'guest';
     this._artists = [];
   }
 
@@ -42,8 +49,16 @@ export default class UserStore {
     return this._isAuth;
   }
 
-  get info() {
-    return this._info;
+  get id() {
+    return this._id;
+  }
+
+  get login() {
+    return this._login;
+  }
+
+  get role() {
+    return this._role;
   }
 
   get artists() {
