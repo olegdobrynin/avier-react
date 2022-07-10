@@ -1,8 +1,4 @@
-import { observer } from 'mobx-react-lite'
-import React from 'react'
+import React from 'react';
+import { observer } from 'mobx-react-lite';
 
-export default observer(() => {
-  return (
-    <div>Mark</div>
-  );
-});
+export default observer(() => <div>Mark</div>);

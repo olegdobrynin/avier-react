@@ -10,21 +10,21 @@ export default observer(({ artist }) => {
 
   return (
     <Col md={3}>
-      <Card style={{cursor: 'pointer'}} className='mb-3'>
+      <Card style={{ cursor: 'pointer' }} className="mb-3">
         <Card.Link
           tabIndex="0"
           onClick={() => navigate(`${ARTIST_ROUTE}/${artist.id}`)}
-          style={{'text-decoration': "none"}}
+          style={{ textDecoration: 'none' }}
           href="#"
         >
           <Card.Img variant="top" src={img} />
           <Card.Body>
-            <div className='d-flex justify-content-center align-items-center'>
-              <Card.Title style={{color: "black"}}>{artist.name}</Card.Title>
+            <div className="d-flex justify-content-center align-items-center">
+              <Card.Title style={{ color: 'black' }}>{artist.name}</Card.Title>
             </div>
           </Card.Body>
         </Card.Link>
       </Card>
     </Col>
-  )
+  );
 });
