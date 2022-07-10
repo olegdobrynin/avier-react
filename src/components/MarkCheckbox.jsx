@@ -1,32 +1,28 @@
 import React, { useContext, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Form } from 'react-bootstrap';
-import { Context } from '../index.jsx';
 import { checkMark, createMark, deleteMark } from '../http/markAPI.js';
+import { UserContext } from '../contexts.jsx';
 
 export default observer(({ artId, checked, setChecked }) => {
-  const { user } = useContext(Context);
+  const User = useContext(UserContext);
 
   useEffect(() => {
-    if (localStorage.token) {
-      checkMark(user.info.id, artId).then((e) => setChecked(e));
+    if (User.isAuth) {
+      checkMark(User.id, artId).then((e) => setChecked(e));
     }
-  }, [artId, user]);
+  }, [artId, setChecked, User]);
 
   const toggleCheckbox = () => {
     if (checked) {
-      deleteMark(user.info.id, artId);
+      deleteMark(User.id, artId);
     } else {
-      createMark(user.info.id, artId);
+      createMark(User.id, artId);
     }
     setChecked(!checked);
   };
 
   return (
-    <>
-      {!user.isAuth || (
-        <Form.Check checked={checked} aria-label="option 1" onClick={toggleCheckbox} />
-      )}
-    </>
+    User.isAuth && <Form.Check checked={checked} aria-label="option 1" onChange={toggleCheckbox} />
   );
 });

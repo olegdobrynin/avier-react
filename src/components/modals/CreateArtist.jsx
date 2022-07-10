@@ -2,14 +2,14 @@ import React, { useContext, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { Context } from '../../index.jsx';
 import { createArtist } from '../../http/artistAPI.js';
 import { ARTIST_ROUTE } from '../../utils/consts.js';
+import { UserContext } from '../../contexts.jsx';
 
 export default observer(({ show, onHide }) => {
   const navigate = useNavigate();
-  const { user } = useContext(Context);
-  const userId = user.info.id;
+  const User = useContext(UserContext);
+  const userId = User.id;
   const [name, setName] = useState('');
   const [bio, setBio] = useState('');
   const [file, setFile] = useState(null);
@@ -29,12 +29,12 @@ export default observer(({ show, onHide }) => {
     return createArtist(formData)
       .then((artist) => {
         setTimeout(() => {
+          onHide();
+          navigate(`${ARTIST_ROUTE}/${artist.id}`);
           setName('');
           setBio('');
           setFile(null);
-          navigate(`${ARTIST_ROUTE}/${artist.id}`);
-          user.addArtist(artist);
-          onHide();
+          User.addArtist(artist);
         }, 100);
       })
       .catch((e) => alert(e.response.data.message));
@@ -43,9 +43,7 @@ export default observer(({ show, onHide }) => {
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Добавить художника
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Добавить художника</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -64,11 +62,7 @@ export default observer(({ show, onHide }) => {
             rows={3}
             placeholder="Биография"
           />
-          <Form.Control
-            className="mt-3"
-            type="file"
-            onChange={selectFile}
-          />
+          <Form.Control className="mt-3" type="file" onChange={selectFile} />
           <Form.Text>
             Выберите фотографию формата JPEG или PNG, максимальный размер файла ограничен 2Мб.
           </Form.Text>

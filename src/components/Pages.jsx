@@ -1,27 +1,23 @@
-import { observer } from 'mobx-react-lite';
-import React, { useContext } from 'react';
+import React from 'react';
 import { Pagination } from 'react-bootstrap';
-import { Context } from '../index.jsx';
+import { observer } from 'mobx-react-lite';
 
-export default observer(() => {
-  const { art } = useContext(Context);
-  const pageCount = Math.ceil(art.totalCount / art.limit);
+export default observer(({ page, setPage, totalCount }) => {
+  const pageCount = Math.ceil(totalCount / 8);
   const pages = [...Array(pageCount)].map((_, i) => i + 1);
-  const pagesList = pages.map((page) => (
-    <Pagination.Item key={page} active={art.page === page} onClick={() => art.setPage(page)}>
-      {page}
+  const pagesList = pages.map((p) => (
+    <Pagination.Item key={p} active={page === p} onClick={() => setPage(p)}>
+      {p}
     </Pagination.Item>
   ));
 
   return (
-    <Pagination className='mt-5'>
-      <Pagination.First onClick={() => art.setPage(1)} />
-      <Pagination.Prev onClick={() => art.setPage(art.page - 1 || art.page)} />
+    <Pagination className="mt-5">
+      <Pagination.First onClick={() => setPage(1)} />
+      <Pagination.Prev onClick={() => setPage(page - 1 || page)} />
       {pagesList}
-      <Pagination.Next
-        onClick={() => art.setPage(art.page === pages.length ? art.page : art.page + 1)}
-      />
-      <Pagination.Last onClick={() => art.setPage(pages.length)} />
+      <Pagination.Next onClick={() => setPage(page === pages.length ? page : page + 1)} />
+      <Pagination.Last onClick={() => setPage(pages.length)} />
     </Pagination>
   );
 });

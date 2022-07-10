@@ -1,15 +1,12 @@
-import React, { useContext } from 'react';
-import { observer } from 'mobx-react-lite';
+import React from 'react';
 import { Row } from 'react-bootstrap';
-import { Context } from '../index.jsx';
+import { observer } from 'mobx-react-lite';
 import ArtItem from './ArtItem.jsx';
 
-export default observer(() => {
-  const {art} = useContext(Context);
-
-  return (
-    <Row className='d-flex pt-2'>
-      {art.arts.map((art) => (<ArtItem key={art.id} art={art} />))}
-    </Row>
-  );
-});
+export default observer(({ arts }) => (
+  <Row className="d-flex pt-2">
+    {arts.map((art) => (
+      <ArtItem key={art.id} art={art} />
+    ))}
+  </Row>
+));

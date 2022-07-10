@@ -1,34 +1,36 @@
 import React, { useContext, useState } from 'react';
-import { observer } from 'mobx-react-lite';
-import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
+import {
+  Navbar, Container, Nav, NavDropdown,
+} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { Context } from '../index.jsx';
+import { observer } from 'mobx-react-lite';
+import { UserContext } from '../contexts.jsx';
 import CreateArt from './modals/CreateArt.jsx';
 import {
-  ADMIN_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE, USER_ARTIST_ROUTE, PROFILE_ROUTE
+  ADMIN_ROUTE,
+  LOGIN_ROUTE,
+  MAIN_ROUTE,
+  REGISTRATION_ROUTE,
+  USER_ARTIST_ROUTE,
+  PROFILE_ROUTE,
 } from '../utils/consts.js';
 
 export default observer(() => {
   const navigate = useNavigate();
-  const { art, user } = useContext(Context);
+  const User = useContext(UserContext);
   const [artVisible, setArtVisible] = useState(false);
 
   const logOut = () => {
-    user.clear();
+    User.clear();
     localStorage.clear();
     navigate(MAIN_ROUTE);
   };
 
-  const logo = () => {
-    art.setSelectedType();
-    navigate(MAIN_ROUTE);
-  };
-
   return (
-    <Navbar bg="light" variant="light" >
+    <Navbar bg="light" variant="light">
       <Container>
         <Navbar.Brand>
-          <Nav.Link tabIndex="0" onClick={() => logo()}>
+          <Nav.Link tabIndex="0" onClick={() => navigate(MAIN_ROUTE)}>
             <img
               src="/logo330x100.png"
               width="132"
@@ -39,17 +41,21 @@ export default observer(() => {
           </Nav.Link>
         </Navbar.Brand>
 
-        {user.isAuth ? (
+        {User.isAuth ? (
           <Nav className="ml-auto">
             <NavDropdown
               className="ml-auto"
               id="nav-dropdown"
               align="end"
-              title={user.info.login}
+              title={User.login}
               menuVariant="white"
             >
-              {(user.info.role !== 'admin') || (<NavDropdown.Item onClick={() => navigate(ADMIN_ROUTE)}>Админ</NavDropdown.Item>)}
-              <NavDropdown.Item onClick={() => navigate(USER_ARTIST_ROUTE)}>Художники</NavDropdown.Item>
+              {User.role === 'admin' && (
+                <NavDropdown.Item onClick={() => navigate(ADMIN_ROUTE)}>Админ</NavDropdown.Item>
+              )}
+              <NavDropdown.Item onClick={() => navigate(USER_ARTIST_ROUTE)}>
+                Художники
+              </NavDropdown.Item>
               <NavDropdown.Item onClick={() => setArtVisible(true)}>Добавить арт</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={() => navigate(PROFILE_ROUTE)}>Настройки</NavDropdown.Item>

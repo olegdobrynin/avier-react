@@ -1,29 +1,33 @@
-import { observer } from 'mobx-react-lite';
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import { Context } from '../index.jsx';
+import { observer } from 'mobx-react-lite';
+import { fetchArts } from '../http/artAPI.js';
+import { UserContext } from '../contexts.jsx';
 import ArtList from '../components/ArtList.jsx';
 import Pages from '../components/Pages.jsx';
 import TypeBar from '../components/TypeBar.jsx';
-import { fetchArts } from '../http/artAPI.js';
-import { fetchTypes } from '../http/typeAPI.js';
 
 export default observer(() => {
-  const { art } = useContext(Context);
+  const User = useContext(UserContext);
+  const [arts, setArts] = useState([]);
+  const [type, setType] = useState();
+  const [page, setPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
-    fetchTypes().then((types) => art.setTypes(types));
-    fetchArts(art.selectedType, null, art.page, art.limit).then((arts) => {
-      art.setArts(arts.rows);
-      art.setTotalCount(arts.count);
+    fetchArts(type, null, null, page, 8).then((data) => {
+      setArts(data.rows);
+      setTotalCount(data.count);
     });
-  }, [art, art.page, art.selectedType]);
+  }, [page, type]);
+
+  useEffect(() => setPage(1), [type]);
 
   return (
     <Container>
-      <TypeBar />
-      <ArtList />
-      {!art.totalCount || <Pages />}
+      <TypeBar type={type} setType={setType} setPage={setPage} />
+      <ArtList arts={arts} />
+      {!totalCount || <Pages page={page} setPage={setPage} totalCount={totalCount} />}
     </Container>
   );
 });

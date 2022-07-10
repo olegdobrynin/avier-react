@@ -1,24 +1,22 @@
-import { observer } from 'mobx-react-lite';
 import React, { useContext } from 'react';
 import { Nav } from 'react-bootstrap';
-import { Context } from '../index.jsx';
+import { observer } from 'mobx-react-lite';
+import { TypesContext } from '../contexts.jsx';
 
-export default observer(() => {
-  const { art } = useContext(Context);
+export default observer(({ type, setType }) => {
+  const Types = useContext(TypesContext);
 
   return (
-    <Nav variant="pills" defaultActiveKey={art.selectedType || 0} className="my-2">
+    <Nav variant="pills" defaultActiveKey={type || 0} className="my-2">
       <Nav.Item key="0">
-        <Nav.Link eventKey="0" key="0" onClick={() => art.setSelectedType()}>Все</Nav.Link>
+        <Nav.Link eventKey="0" key="0" onClick={() => setType()}>
+          Все
+        </Nav.Link>
       </Nav.Item>
-      {art.types.map((type) => (
-        <Nav.Item key={type.id}>
-          <Nav.Link
-            eventKey={type.id}
-            key={type.id}
-            onClick={() => art.setSelectedType(type.id)}
-          >
-            {type.name}
+      {Types.types.map((t) => (
+        <Nav.Item key={t.id}>
+          <Nav.Link eventKey={t.id} key={t.id} onClick={() => setType(t.id)}>
+            {t.name}
           </Nav.Link>
         </Nav.Item>
       ))}
