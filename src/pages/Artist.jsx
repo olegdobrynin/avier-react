@@ -28,10 +28,10 @@ export default observer(() => {
         setArtist(data);
         setImg(`${process.env.REACT_APP_API_URL}artists/${data.img}`);
       })
-      .then(() => fetchArts(null, null, id))
+      .then(() => fetchArts(null, User.id, id))
       .then((data) => setArts(data.rows))
       .catch(() => navigate(MAIN_ROUTE));
-  }, [id, navigate]);
+  }, [User, id, navigate]);
 
   return (
     <Container className="mt-3">
