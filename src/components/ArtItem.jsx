@@ -7,7 +7,7 @@ import { ART_ROUTE } from '../utils/consts.js';
 
 export default observer(({ art }) => {
   const navigate = useNavigate();
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(art?.mark?.length > 0);
 
   return (
     <Col md={3}>

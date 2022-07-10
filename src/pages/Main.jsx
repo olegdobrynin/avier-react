@@ -15,11 +15,11 @@ export default observer(() => {
   const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
-    fetchArts(type, null, null, page, 8).then((data) => {
+    fetchArts(type, User.id, null, page, 8).then((data) => {
       setArts(data.rows);
       setTotalCount(data.count);
     });
-  }, [page, type]);
+  }, [User, page, type]);
 
   useEffect(() => setPage(1), [type]);
 
