@@ -4,13 +4,13 @@ import {
 } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { Context } from '../index.jsx';
 import { fetchArtists } from '../http/artistAPI.js';
 import { auth, registration } from '../http/userAPI.js';
 import { LOGIN_ROUTE, MAIN_ROUTE } from '../utils/consts.js';
+import { UserContext } from '../contexts.jsx';
 
 export default observer(() => {
-  const { user } = useContext(Context);
+  const User = useContext(UserContext);
   const location = useLocation();
   const navigate = useNavigate();
   const isLogin = location.pathname === LOGIN_ROUTE;
@@ -19,16 +19,16 @@ export default observer(() => {
 
   const click = async () => {
     try {
-      const data = isLogin
+      const { id, role } = isLogin
         ? await auth(login, password)
         : await registration(login, password);
 
       setLogin('');
       setPassword('');
-      user.setIsAuth();
-      user.setInfo(data);
-      const artists = await fetchArtists(data.id);
-      user.setArtists(artists);
+      User.setIsAuth();
+      User.setInfo({ id, login, role });
+      const artists = await fetchArtists(id);
+      User.setArtists(artists);
       navigate(MAIN_ROUTE);
     } catch (e) {
       alert(e.response.data.message);

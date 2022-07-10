@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { Context } from '../index.jsx';
 import { MAIN_ROUTE } from '../utils/consts.js';
+import { UserContext } from '../contexts.jsx';
 import {
   adminRoutes, authRoutes, publicRoutes, unAuthRoutes,
 } from '../routes.jsx';
 
 export default observer(() => {
-  const { user } = useContext(Context);
+  const User = useContext(UserContext);
 
   const getRoutes = () => {
-    switch (user.info.role) {
+    switch (User.role) {
       case 'admin':
         return [...adminRoutes, ...authRoutes, ...publicRoutes].map(({ path, element }) => (
           <Route key={path} path={path} element={element} end />

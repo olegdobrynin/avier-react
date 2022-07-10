@@ -10,10 +10,14 @@ export const deleteArt = async (id) => {
   return data;
 };
 
-export const fetchArts = async (typeId, artistId, page, limit) => {
+export const fetchArts = async (typeId, userId, artistId, page, limit) => {
   const { data } = await $host.get('api/art', {
     params: {
-      typeId, artistId, page, limit,
+      artistId,
+      typeId,
+      userId,
+      page,
+      limit,
     },
   });
   return data;

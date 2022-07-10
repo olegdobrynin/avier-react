@@ -3,29 +3,35 @@ import { Spinner } from 'react-bootstrap';
 import { BrowserRouter } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import './App.css';
-import { Context } from './index.jsx';
 import { fetchArtists } from './http/artistAPI.js';
+import { fetchTypes } from './http/typeAPI.js';
 import { check } from './http/userAPI.js';
+import { TypesContext, UserContext } from './contexts.jsx';
 import AppRouter from './components/AppRouter.jsx';
 import NavBar from './components/NavBar.jsx';
 
 export default observer(() => {
-  const { user } = useContext(Context);
+  const Types = useContext(TypesContext);
+  const User = useContext(UserContext);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (localStorage.token) {
       check()
-        .then((data) => user.setInfo(data))
-        .then(() => user.setIsAuth())
+        .then((data) => User.setInfo(data))
+        .then(() => User.setIsAuth())
         .then(() => fetchArtists(User.id))
-        .then((artists) => user.setArtists(artists))
+        .then((artists) => User.setArtists(artists))
+        .then(() => fetchTypes())
+        .then((types) => Types.setTypes(types))
         .catch(() => localStorage.clear())
         .finally(() => setLoading(false));
     } else {
-      setLoading(false);
+      fetchTypes()
+        .then((types) => Types.setTypes(types))
+        .then(() => setLoading(false));
     }
-  }, [user]);
+  }, [Types, User]);
 
   return loading ? (
     <Spinner animation="grow" />
