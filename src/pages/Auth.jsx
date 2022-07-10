@@ -1,9 +1,12 @@
-import { observer } from 'mobx-react-lite';
-import React , { useContext, useState } from 'react';
-import { Button, Card, Container, Form } from 'react-bootstrap';
+import React, { useContext, useState } from 'react';
+import {
+  Button, Card, Container, Form,
+} from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import { Context } from '../index.jsx';
-import { auth, fetchInfo, registration } from '../http/userAPI.js';
+import { fetchArtists } from '../http/artistAPI.js';
+import { auth, registration } from '../http/userAPI.js';
 import { LOGIN_ROUTE, MAIN_ROUTE } from '../utils/consts.js';
 
 export default observer(() => {
@@ -24,22 +27,20 @@ export default observer(() => {
       setPassword('');
       user.setIsAuth();
       user.setInfo(data);
-      const info = await fetchInfo(data.id);
-      user.setArtists(info.artists);
+      const artists = await fetchArtists(data.id);
+      user.setArtists(artists);
       navigate(MAIN_ROUTE);
     } catch (e) {
       alert(e.response.data.message);
     }
   };
 
-  const handleKeyPress = (target) => target.charCode === 13
-    ? click()
-    : null;
+  const handleKeyPress = (target) => (target.charCode === 13 ? click() : null);
 
   return (
-    <Container className='d-flex justify-content-center align-item-center py-5'>
-      <Card className='p-3' style={{maxWidth:600, width: document.documentElement.clientWidth}}>
-        <Form className='d-flex flex-column'>
+    <Container className="d-flex justify-content-center align-item-center py-5">
+      <Card className="p-3" style={{ maxWidth: 600, width: document.documentElement.clientWidth }}>
+        <Form className="d-flex flex-column">
           <Form.Group className="mb-3" controlId="login">
             <Form.Label>Логин</Form.Label>
             <Form.Control
@@ -62,7 +63,7 @@ export default observer(() => {
               onKeyPress={handleKeyPress}
             />
           </Form.Group>
-          <Button className='mt-3' variant={'primary'} onClick={click}>
+          <Button className="mt-3" variant="primary" onClick={click}>
             {isLogin ? 'Войти' : 'Зарегистрироваться'}
           </Button>
         </Form>

@@ -4,9 +4,10 @@ import { BrowserRouter } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import './App.css';
 import { Context } from './index.jsx';
-import NavBar from './components/NavBar.jsx';
+import { fetchArtists } from './http/artistAPI.js';
+import { check } from './http/userAPI.js';
 import AppRouter from './components/AppRouter.jsx';
-import { check, fetchInfo } from './http/userAPI.js';
+import NavBar from './components/NavBar.jsx';
 
 export default observer(() => {
   const { user } = useContext(Context);
@@ -16,9 +17,9 @@ export default observer(() => {
     if (localStorage.token) {
       check()
         .then((data) => user.setInfo(data))
-        .then(() => fetchInfo(user.info.id))
-        .then(({ artists }) => user.setArtists(artists))
         .then(() => user.setIsAuth())
+        .then(() => fetchArtists(User.id))
+        .then((artists) => user.setArtists(artists))
         .catch(() => localStorage.clear())
         .finally(() => setLoading(false));
     } else {
@@ -26,12 +27,12 @@ export default observer(() => {
     }
   }, [user]);
 
-  return loading
-    ? (<Spinner animation={"grow"}/>)
-    : (
-      <BrowserRouter>
-        <NavBar />
-        <AppRouter />
-      </BrowserRouter>
-    );
+  return loading ? (
+    <Spinner animation="grow" />
+  ) : (
+    <BrowserRouter>
+      <NavBar />
+      <AppRouter />
+    </BrowserRouter>
+  );
 });

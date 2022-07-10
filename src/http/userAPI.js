@@ -19,9 +19,4 @@ export const check = async () => {
   return jwtDecode(data.token);
 };
 
-export const fetchInfo = async (id) => {
-  const { data } = await $authHost.get(`api/user/${id}`);
-  return data;
-};
-
 export const deleteUser = (id) => $host.delete(`api/user/${id}`);
