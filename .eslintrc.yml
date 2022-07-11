@@ -27,3 +27,5 @@ rules:
     - ignorePackages
     - js: always
   no-underscore-dangle: 0
+  linebreak-style: 0
+  react/jsx-no-constructed-context-values: 0
