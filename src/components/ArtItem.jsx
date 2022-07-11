@@ -2,12 +2,14 @@ import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Col } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
+import LikeCheckbox from './LikeCheckbox.jsx';
 import MarkCheckbox from './MarkCheckbox.jsx';
 import { ART_ROUTE } from '../utils/consts.js';
 import { UserContext } from '../contexts.jsx';
 
 export default observer(({ art }) => {
   const User = useContext(UserContext);
+  const [liked, setLiked] = useState(art.like?.length > 0);
   const [marked, setMarked] = useState(art.mark?.length > 0);
 
   return (
@@ -27,6 +29,9 @@ export default observer(({ art }) => {
           </Card.Body>
         </Link>
       </Card>
+      {User.isAuth && (
+        <LikeCheckbox artId={art.id} likes={art.likes} liked={liked} setLiked={setLiked} />
+      )}
     </Col>
   );
 });

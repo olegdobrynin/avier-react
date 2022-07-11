@@ -8,6 +8,7 @@ import '../index.css';
 import { fetchOneArt } from '../http/artAPI.js';
 import { ARTIST_ROUTE, MAIN_ROUTE } from '../utils/consts.js';
 import { UserContext } from '../contexts.jsx';
+import LikeCheckbox from '../components/LikeCheckbox.jsx';
 import MarkCheckbox from '../components/MarkCheckbox.jsx';
 // import EditArt from '../components/modals/EditArt.jsx';
 import DeleteArt from '../components/modals/DeleteArt.jsx';
@@ -18,6 +19,7 @@ export default observer(() => {
   const { id } = useParams();
   const [art, setArt] = useState({});
   const [img, setImg] = useState('');
+  const [liked, setLiked] = useState(false);
   const [marked, setMarked] = useState(false);
   // const [editVisible, setEditVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
@@ -28,6 +30,7 @@ export default observer(() => {
         setArt(data);
         setImg(`${process.env.REACT_APP_API_URL}arts/${data.img}`);
         setMarked(data.mark?.length > 0);
+        setLiked(data.like?.length > 0);
       })
       .catch(() => navigate(MAIN_ROUTE));
   }, [User, id, navigate]);
@@ -64,6 +67,9 @@ export default observer(() => {
                 {User.isAuth && <MarkCheckbox artId={id} marked={marked} setMarked={setMarked} />}
               </div>
             </div>
+            {User.isAuth && (
+              <LikeCheckbox artId={id} likes={art.likes} liked={liked} setLiked={setLiked} />
+            )}
             {art.artists
               && art.artists.map((artist) => (
                 <Row key={artist.id}>
