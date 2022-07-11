@@ -16,6 +16,11 @@ export default observer(({ art }) => {
         border={"light"}
         className="mb-3 w-100"
       >
+        <div className="position-relative" > 
+              <div className="position-absolute top-0 end-0 mx-3">
+              <MarkCheckbox artId={art.id} checked={checked} setChecked={setChecked} />
+              </div> 
+            </div>       
         <Card.Link
           onClick={() => navigate(`${ART_ROUTE}/${art.id}`)}
           tabIndex="0"
@@ -30,7 +35,7 @@ export default observer(({ art }) => {
           </Card.Body>
         </Card.Link>
       </Card>
-      <MarkCheckbox artId={art.id} checked={checked} setChecked={setChecked} />
+      
     </Col>
   );
 });

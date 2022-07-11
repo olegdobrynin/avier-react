@@ -3,6 +3,7 @@ import { Button, Col, Container, Image, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../index.jsx';
+import '../index.css';
 import MarkCheckbox from '../components/MarkCheckbox.jsx';
 import { fetchOneArt } from '../http/artAPI.js';
 import { ARTIST_ROUTE, MAIN_ROUTE } from '../utils/consts.js';
@@ -33,12 +34,13 @@ export default observer(() => {
       <Row>
         <Col md={8}>
           <Image className="w-100" src={img}/>
+          
           <Row>
             {art.imgs.map((img) => (
               <Col
                 key={img}
                 xs={3}
-                className="mt-2"
+                className="mt-2 mb-2"
                 onClick={() => {setImg(`${process.env.REACT_APP_API_URL}arts/${img}`)}}
               >
                 <Image
@@ -50,8 +52,12 @@ export default observer(() => {
           </Row>
         </Col>
         <Col md={4}>
-        <MarkCheckbox artId={id} checked={checked} setChecked={setChecked} />
           <Row>
+            <div className="position-relative" > 
+              <div className="position-absolute top-0 end-0 mx-3">
+                <MarkCheckbox artId={id} checked={checked} setChecked={setChecked} />
+              </div> 
+            </div>           
             {art.artists.map((artist) => (
               <Row
                 key={artist.id}
@@ -78,7 +84,7 @@ export default observer(() => {
           {!(
             user.info.role === 'admin' || user.artists.some(({ id }) => art.artists.some((a) => a.id === id))
           ) || (
-            <Row>
+            <Row className='mx-1'>
               {/* <Button
                 className='mt-2 mb-2'
                 variant="outline-dark"
@@ -88,12 +94,13 @@ export default observer(() => {
               </Button>
               <EditArt show={editVisible} onHide={() => setEditVisible(false)} /> */}
               <Button
-                className='mt-2 mb-2'
+                className='my-2'
                 variant="outline-danger"
                 onClick={() => setDeleteVisible(true)}
               >
                 Удалить
               </Button>
+              
               <DeleteArt show={deleteVisible} onHide={() => setDeleteVisible(false)} />
             </Row>
           )}
