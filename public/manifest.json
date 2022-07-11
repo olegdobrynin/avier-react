@@ -14,11 +14,13 @@
     },
     {
       "src": "mark.png",
-      "type": "image/png"
+      "type": "image/png",
+      "sizes": "64x64"
     },
     {
       "src": "marked.png",
-      "type": "image/png"
+      "type": "image/png",
+      "sizes": "64x64"
     }
   ],
   "start_url": ".",
