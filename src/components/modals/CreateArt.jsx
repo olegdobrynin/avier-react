@@ -4,15 +4,16 @@ import {
 } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { Context } from '../../index.jsx';
 import { createArt } from '../../http/artAPI.js';
 import { ART_ROUTE } from '../../utils/consts.js';
+import { TypesContext, UserContext } from '../../contexts.jsx';
 
 export default observer(({ show, onHide }) => {
   const now = Date.now();
   const getSampleArtist = () => ({ name: 'Xyдoжник', number: Date.now() - now });
   const navigate = useNavigate();
-  const { art, user } = useContext(Context);
+  const Types = useContext(TypesContext);
+  const User = useContext(UserContext);
   const [type, setType] = useState('');
   const [name, setName] = useState('');
   const [about, setAbout] = useState('');
@@ -26,8 +27,8 @@ export default observer(({ show, onHide }) => {
     setArtists([...artists, getSampleArtist()]);
   };
 
-  const changeArtist = (artistId, name, number) => {
-    setArtists(artists.map((a) => (a.number === number ? { ...a, artistId, name } : a)));
+  const changeArtist = (artistId, n, number) => {
+    setArtists(artists.map((a) => (a.number === number ? { ...a, artistId, name: n } : a)));
   };
 
   const removeArtist = (number) => {
@@ -47,7 +48,11 @@ export default observer(({ show, onHide }) => {
   };
 
   const selectFiles = (e) => {
-    setFiles([...e.target.files]);
+    if (e.target.files.length > 5) {
+      alert('Слишком много файлов!');
+    } else {
+      setFiles([...e.target.files]);
+    }
   };
 
   const addArt = () => {
@@ -106,36 +111,38 @@ export default observer(({ show, onHide }) => {
       <Modal.Body>
         <Form>
           <div className="d-flex flex-row">
-            {artists.map(({ name, number }) => (
+            {artists.map(({ name: artistName, number }) => (
               <Dropdown key={number} className="mb-2 me-2">
-                <Dropdown.Toggle>{name}</Dropdown.Toggle>
+                <Dropdown.Toggle>{artistName}</Dropdown.Toggle>
                 <Dropdown.Menu>
-                  {user.artists
+                  {User.artists
                     .filter(({ id }) => !artists.some(({ artistId }) => artistId === id))
                     .map((artist) => (
                       <Dropdown.Item
-                        onClick={() => changeArtist(artist.id, artist.name, number)}
                         key={artist.id}
+                        onClick={() => changeArtist(artist.id, artist.name, number)}
                       >
                         {artist.name}
                       </Dropdown.Item>
                     ))}
                 </Dropdown.Menu>
-                <Button variant="danger" onClick={() => removeArtist(number)}>-</Button>
+                <Button variant="danger" onClick={() => removeArtist(number)}>
+                  -
+                </Button>
               </Dropdown>
             ))}
-            {artists.length >= user.artists.length
-              || <Button className="mb-2" onClick={addArtist}>+</Button>}
+            {artists.length < User.artists.length && (
+              <Button className="mb-2" onClick={addArtist}>
+                +
+              </Button>
+            )}
           </div>
-          <Dropdown className="mt-2 mb-2">
+          <Dropdown className="my-2">
             <Dropdown.Toggle>{type.name || 'Тип'}</Dropdown.Toggle>
             <Dropdown.Menu>
-              {art.types.map((type) => (
-                <Dropdown.Item
-                  onClick={() => setType(type)}
-                  key={type.id}
-                >
-                  {type.name}
+              {Types.types.map((t) => (
+                <Dropdown.Item onClick={() => setType(t)} key={t.id}>
+                  {t.name}
                 </Dropdown.Item>
               ))}
             </Dropdown.Menu>
@@ -169,6 +176,7 @@ export default observer(({ show, onHide }) => {
           />
           <Form.Control
             className="mt-3"
+            accept="image/jpeg,image/png"
             type="file"
             multiple
             onChange={selectFiles}

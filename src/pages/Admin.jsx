@@ -1,7 +1,4 @@
-import React from 'react'
+import React from 'react';
+import { observer } from 'mobx-react-lite';
 
-export default function Admin() {
-  return (
-    <div>Admin</div>
-  )
-}
+export default observer(() => <div>Admin</div>);

@@ -1,90 +1,120 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { Button, Col, Container, Image, Row } from 'react-bootstrap';
-import { useNavigate, useParams } from 'react-router-dom';
+import {
+  Button, Card, Col, Container, Image, Row,
+} from 'react-bootstrap';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { Context } from '../index.jsx';
 import '../index.css';
-import MarkCheckbox from '../components/MarkCheckbox.jsx';
 import { fetchOneArt } from '../http/artAPI.js';
 import { ARTIST_ROUTE, MAIN_ROUTE } from '../utils/consts.js';
+import { UserContext } from '../contexts.jsx';
+import LikeCheckbox from '../components/LikeCheckbox.jsx';
+import MarkCheckbox from '../components/MarkCheckbox.jsx';
 // import EditArt from '../components/modals/EditArt.jsx';
 import DeleteArt from '../components/modals/DeleteArt.jsx';
 
 export default observer(() => {
   const navigate = useNavigate();
-  const { user } = useContext(Context);
+  const User = useContext(UserContext);
   const { id } = useParams();
-  const [art, setArt] = useState({ artists: [], imgs: [], properties: [] });
+  const [art, setArt] = useState({});
   const [img, setImg] = useState('');
-  const [checked, setChecked] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [marked, setMarked] = useState(false);
   // const [editVisible, setEditVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
 
   useEffect(() => {
-    fetchOneArt(id)
+    fetchOneArt(id, User.id)
       .then((data) => {
         setArt(data);
         setImg(`${process.env.REACT_APP_API_URL}arts/${data.img}`);
+        setMarked(data.mark?.length > 0);
+        setLiked(data.like?.length > 0);
       })
       .catch(() => navigate(MAIN_ROUTE));
-  }, [id, navigate]);
+  }, [User, id, navigate]);
 
   return (
-    <Container className='mt-3'>
+    <Container className="mt-3">
       <Row>
         <Col md={8}>
-          <Image className="w-100" src={img}/>
-          
+          <Image className="w-100" src={img} />
           <Row>
-            {art.imgs.map((img) => (
-              <Col
-                key={img}
-                xs={3}
-                className="mt-2 mb-2"
-                onClick={() => {setImg(`${process.env.REACT_APP_API_URL}arts/${img}`)}}
-              >
-                <Image
-                  className='w-100'
-                  src={`${process.env.REACT_APP_API_URL}arts/${img}`}
-                />
-              </Col>
-            ))}
+            {art.imgs
+              && art.imgs.map((i) => (
+                <Col key={i} xs={3} className="mt-2">
+                  <Card style={{ cursor: 'pointer' }} border="light" className="mb-3 w-100">
+                    <Card.Link
+                      href="#"
+                      tabIndex="0"
+                      onClick={() => setImg(`${process.env.REACT_APP_API_URL}arts/${i}`)}
+                    >
+                      <Card.Img
+                        className="w-100"
+                        src={`${process.env.REACT_APP_API_URL}arts/${i}`}
+                      />
+                    </Card.Link>
+                  </Card>
+                </Col>
+              ))}
           </Row>
         </Col>
         <Col md={4}>
           <Row>
-            <div className="position-relative" > 
+            <div className="position-relative">
               <div className="position-absolute top-0 end-0 mx-3">
-                <MarkCheckbox artId={id} checked={checked} setChecked={setChecked} />
-              </div> 
-            </div>           
-            {art.artists.map((artist) => (
-              <Row
-                key={artist.id}
-                style={{cursor: 'pointer'}}
-                onClick={() => navigate(`${ARTIST_ROUTE}/${artist.id}`)}
-              >
-                <h6>{artist.name}</h6>
-              </Row>
-            ))}
+                {User.isAuth && <MarkCheckbox artId={id} marked={marked} setMarked={setMarked} />}
+              </div>
+            </div>
+            {User.isAuth && (
+              <LikeCheckbox artId={id} likes={art.likes} liked={liked} setLiked={setLiked} />
+            )}
+            {art.artists
+              && art.artists.map((artist) => (
+                <Row key={artist.id}>
+                  <Link
+                    style={{ cursor: 'pointer', textDecoration: 'none' }}
+                    tabIndex="0"
+                    to={`${ARTIST_ROUTE}/${artist.id}`}
+                  >
+                    <h6 style={{ color: 'black' }}>{artist.name}</h6>
+                  </Link>
+                </Row>
+              ))}
           </Row>
 
-          <Row><h2>{art.name}</h2></Row>
-          <Row><h6>{art.about}</h6></Row>
-          <Row><h5>{art.city}</h5></Row>
-          <Row><h5>{art.year}</h5></Row>
           <Row>
-            {art.properties.map((property) => (
-              <Row key={property.id}>
-                <h6>{property.title}: {property.description}</h6>
-              </Row>
-            ))}
+            <h2>{art.name}</h2>
           </Row>
+          {art.about && (
+            <Row>
+              <h6>{art.about}</h6>
+            </Row>
+          )}
+          {art.city && (
+            <Row>
+              <h5>{art.city}</h5>
+            </Row>
+          )}
+          {art.year && (
+            <Row>
+              <h5>{art.year}</h5>
+            </Row>
+          )}
+          {art.properties && (
+            <Row>
+              {art.properties.map((property) => (
+                <Row key={property.title}>
+                  <h6>{`${property.title}: ${property.description}`}</h6>
+                </Row>
+              ))}
+            </Row>
+          )}
 
-          {!(
-            user.info.role === 'admin' || user.artists.some(({ id }) => art.artists.some((a) => a.id === id))
-          ) || (
-            <Row className='mx-1'>
+          {(User.role === 'admin'
+            || User.artists.some((artist) => art.artists.some((a) => a.id === artist.id))) && (
+            <Row>
               {/* <Button
                 className='mt-2 mb-2'
                 variant="outline-dark"
@@ -94,13 +124,13 @@ export default observer(() => {
               </Button>
               <EditArt show={editVisible} onHide={() => setEditVisible(false)} /> */}
               <Button
-                className='my-2'
+                className="my-2"
                 variant="outline-danger"
                 onClick={() => setDeleteVisible(true)}
               >
                 Удалить
               </Button>
-              
+
               <DeleteArt show={deleteVisible} onHide={() => setDeleteVisible(false)} />
             </Row>
           )}

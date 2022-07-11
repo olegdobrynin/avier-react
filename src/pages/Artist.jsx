@@ -4,18 +4,19 @@ import {
 } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { Context } from '../index.jsx';
-import ArtList from '../components/ArtList.jsx';
-import EditArtist from '../components/modals/EditArtist.jsx';
-import DeleteArtist from '../components/modals/DeleteArtist.jsx';
 import { fetchArts } from '../http/artAPI.js';
 import { fetchOneArtist } from '../http/artistAPI.js';
 import { MAIN_ROUTE } from '../utils/consts.js';
+import { UserContext } from '../contexts.jsx';
+import ArtList from '../components/ArtList.jsx';
+import EditArtist from '../components/modals/EditArtist.jsx';
+import DeleteArtist from '../components/modals/DeleteArtist.jsx';
 
 export default observer(() => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { art, user } = useContext(Context);
+  const User = useContext(UserContext);
+  const [arts, setArts] = useState([]);
   const [artist, setArtist] = useState({});
   const [img, setImg] = useState('');
   const [editVisible, setEditVisible] = useState(false);
@@ -27,12 +28,10 @@ export default observer(() => {
         setArtist(data);
         setImg(`${process.env.REACT_APP_API_URL}artists/${data.img}`);
       })
+      .then(() => fetchArts(null, User.id, id))
+      .then((data) => setArts(data.rows))
       .catch(() => navigate(MAIN_ROUTE));
-    fetchArts(null, id, art.page, null).then((data) => {
-      art.setArts(data.rows);
-      art.setTotalCount(data.count);
-    });
-  }, [art, art.page, id, navigate]);
+  }, [User, id, navigate]);
 
   return (
     <Container className="mt-3">
@@ -41,15 +40,17 @@ export default observer(() => {
           <Image className="w-100" src={img} />
         </Col>
         <Col md={4}>
-          <Row><h2>{artist.name}</h2></Row>
-          <Row><h6>{artist.bio}</h6></Row>
-          {(user.info.role !== 'admin' && !user.artists.some((artist) => artist.id === Number(id))) || (
+          <Row>
+            <h2>{artist.name}</h2>
+          </Row>
+          {artist.bio && (
             <Row>
-              <Button
-                className="my-2"
-                variant="outline-dark"
-                onClick={() => setEditVisible(true)}
-              >
+              <h6>{artist.bio}</h6>
+            </Row>
+          )}
+          {(User.role === 'admin' || User.artists.some((a) => a.id === Number(id))) && (
+            <Row>
+              <Button className="my-2" variant="outline-dark" onClick={() => setEditVisible(true)}>
                 Редактировать
               </Button>
               <EditArtist
@@ -71,7 +72,7 @@ export default observer(() => {
           )}
         </Col>
       </Row>
-      <ArtList/>
-    </Container >
+      <ArtList arts={arts} />
+    </Container>
   );
 });

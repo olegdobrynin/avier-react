@@ -1,17 +1,19 @@
-import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import { Context } from '../../index.jsx';
+import { observer } from 'mobx-react-lite';
 import { updateArtist } from '../../http/artistAPI.js';
+import { UserContext } from '../../contexts.jsx';
 
-export default observer(({ show, onHide, artist, setArtist, setImg }) => {
-  const { user } = useContext(Context);
+export default observer(({
+  show, onHide, artist, setArtist, setImg,
+}) => {
+  const User = useContext(UserContext);
   const { id } = useParams();
   const [name, setName] = useState('');
   const [bio, setBio] = useState('');
-  const [file, setFile] = useState(null)
-  const [userLogin, setUserLogin] = useState(user.info.login);
+  const [file, setFile] = useState(null);
+  const [userLogin, setUserLogin] = useState(User.login);
 
   useEffect(() => {
     setName(artist.name);
@@ -32,10 +34,10 @@ export default observer(({ show, onHide, artist, setArtist, setImg }) => {
     }
     return updateArtist(id, formData)
       .then((data) => {
-        if (userLogin === user.info.login) {
-          user.updateArtist({ id: Number(id), name: data.name, img: data.img });
+        if (userLogin === User.login) {
+          User.updateArtist({ id: Number(id), name: data.name, img: data.img });
         } else {
-          user.deleteArtist({ id });
+          User.deleteArtist({ id });
         }
         setArtist(data);
         setImg(`${process.env.REACT_APP_API_URL}artists/${data.img}`);
@@ -47,39 +49,37 @@ export default observer(({ show, onHide, artist, setArtist, setImg }) => {
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Изменить художника
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Изменить художника</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
         <Form>
           <Form.Control
+            autoFocus
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className='mt-3'
-            placeholder='Введите имя..'
+            className="mt-3"
+            placeholder="Введите имя.."
           />
           <Form.Control
             value={bio}
             onChange={(e) => setBio(e.target.value)}
-            className='mt-3'
+            className="mt-3"
             as="textarea"
             rows={3}
-            placeholder='Биография'
+            placeholder="Биография"
           />
           <Form.Control
             value={userLogin}
             onChange={(e) => setUserLogin(e.target.value)}
-            className='mt-3'
-            placeholder='Введите логин...'
+            className="mt-3"
+            placeholder="Введите логин..."
           />
-          <Form.Text muted>
-            Для передачи прав на художника введите логин пользователя.
-          </Form.Text>
+          <Form.Text muted>Для передачи прав на художника введите логин пользователя.</Form.Text>
           <Form.Control
-            className='mt-1'
-            type='file'
+            className="mt-1"
+            type="file"
+            accept="image/jpeg,image/png"
             onChange={selectFile}
           />
           <Form.Text>
