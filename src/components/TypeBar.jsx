@@ -19,7 +19,14 @@ export default observer(({ type, setType }) => {
             {t.name}
           </Nav.Link>
         </Nav.Item>
-      ))}
+        {Types.types.map((t) => (
+          <Nav.Item key={t.id}>
+            <Nav.Link eventKey={t.id} key={t.id} onClick={() => setType(t.id)}>
+              {t.name}
+            </Nav.Link>
+          </Nav.Item>
+        ))}
+      </div>
     </Nav>
   );
 });

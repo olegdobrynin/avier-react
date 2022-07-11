@@ -11,6 +11,11 @@ export default observer(({ art }) => {
   return (
     <Col md={3}>
       <Card style={{ cursor: 'pointer' }} border="light" className="mb-3 w-100">
+        <div className="position-relative">
+          <div className="position-absolute top-0 end-0 mx-3">
+            <MarkCheckbox artId={art.id} checked={checked} setChecked={setChecked} />
+          </div>
+        </div>
         <Link to={`${ART_ROUTE}/${art.id}`} tabIndex="0" style={{ textDecoration: 'none' }}>
           <Card.Img className="w-100" src={`${process.env.REACT_APP_API_URL}arts/${art.img}`} />
           <Card.Body>
@@ -20,7 +25,6 @@ export default observer(({ art }) => {
           </Card.Body>
         </Link>
       </Card>
-      <MarkCheckbox art={art} checked={checked} setChecked={setChecked} />
     </Col>
   );
 });

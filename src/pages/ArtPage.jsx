@@ -4,6 +4,7 @@ import {
 } from 'react-bootstrap';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+import '../index.css';
 import { fetchOneArt } from '../http/artAPI.js';
 import { ARTIST_ROUTE, MAIN_ROUTE } from '../utils/consts.js';
 import { UserContext } from '../contexts.jsx';
@@ -56,8 +57,12 @@ export default observer(() => {
           </Row>
         </Col>
         <Col md={4}>
-          <MarkCheckbox artId={id} checked={checked} setChecked={setChecked} />
           <Row>
+            <div className="position-relative">
+              <div className="position-absolute top-0 end-0 mx-3">
+                <MarkCheckbox artId={id} checked={checked} setChecked={setChecked} />
+              </div>
+            </div>
             {art.artists
               && art.artists.map((artist) => (
                 <Row key={artist.id}>
@@ -118,6 +123,7 @@ export default observer(() => {
               >
                 Удалить
               </Button>
+
               <DeleteArt show={deleteVisible} onHide={() => setDeleteVisible(false)} />
             </Row>
           )}
