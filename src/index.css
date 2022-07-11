@@ -11,3 +11,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#checkbox {
+  /* display: none; */
+  background: rgba(0, 0, 0, 0);
+  content: url("/mark.png");
+  z-index: 100;
+  width: 30px;
+  height: 30px;
+  border: none;
+  margin: 0;
+}
+#checkbox:checked {
+  background: rgba(0, 0, 0, 0);
+  content: url("/marked.png");
+}
+.scrolling {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+.scrolling .typeCard {
+    flex: 0 0 auto;
+}
+

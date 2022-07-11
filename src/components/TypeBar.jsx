@@ -8,7 +8,8 @@ export default observer(() => {
 
   return (
     <Nav variant="pills" defaultActiveKey={art.selectedType || 0} className="my-2">
-      <Nav.Item key="0">
+      <div class="scrolling">
+      <Nav.Item key="0" class="typeCard">
         <Nav.Link eventKey="0" key="0" onClick={() => art.setSelectedType()}>Все</Nav.Link>
       </Nav.Item>
       {art.types.map((type) => (
@@ -22,6 +23,7 @@ export default observer(() => {
           </Nav.Link>
         </Nav.Item>
       ))}
+      </div>
     </Nav>
   );
 });
