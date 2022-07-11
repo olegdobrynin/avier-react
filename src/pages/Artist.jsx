@@ -43,9 +43,11 @@ export default observer(() => {
           <Row>
             <h2>{artist.name}</h2>
           </Row>
-          <Row>
-            <h6>{artist.bio}</h6>
-          </Row>
+          {artist.bio && (
+            <Row>
+              <h6>{artist.bio}</h6>
+            </Row>
+          )}
           {(User.role === 'admin' || User.artists.some((a) => a.id === Number(id))) && (
             <Row>
               <Button className="my-2" variant="outline-dark" onClick={() => setEditVisible(true)}>
