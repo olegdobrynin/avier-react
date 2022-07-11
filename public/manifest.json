@@ -12,6 +12,14 @@
       "type": "image/png",
       "sizes": "330x100"
     }
+    {
+      "src": "mark.png",
+      "type": "image/png"
+    }
+    {
+      "src": "unmark.png",
+      "type": "image/png"
+    }
   ],
   "start_url": ".",
   "display": "standalone",
