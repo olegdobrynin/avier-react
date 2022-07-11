@@ -7,7 +7,6 @@ export default class UserStore {
     this._login = undefined;
     this._role = 'guest';
     this._artists = [];
-    this._marks = [];
     makeAutoObservable(this);
   }
 
