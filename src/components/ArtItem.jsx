@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Col } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import MarkCheckbox from './MarkCheckbox.jsx';
 import { ART_ROUTE } from '../utils/consts.js';
+import { UserContext } from '../contexts.jsx';
 
 export default observer(({ art }) => {
-  const [checked, setChecked] = useState(art?.mark?.length > 0);
+  const User = useContext(UserContext);
+  const [marked, setMarked] = useState(art.mark?.length > 0);
 
   return (
     <Col md={3}>
       <Card style={{ cursor: 'pointer' }} border="light" className="mb-3 w-100">
         <div className="position-relative">
           <div className="position-absolute top-0 end-0 mx-3">
-            <MarkCheckbox artId={art.id} checked={checked} setChecked={setChecked} />
+            {User.isAuth && <MarkCheckbox artId={art.id} marked={marked} setMarked={setMarked} />}
           </div>
         </div>
         <Link to={`${ART_ROUTE}/${art.id}`} tabIndex="0" style={{ textDecoration: 'none' }}>

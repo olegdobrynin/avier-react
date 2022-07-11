@@ -18,18 +18,19 @@ export default observer(() => {
   const { id } = useParams();
   const [art, setArt] = useState({});
   const [img, setImg] = useState('');
-  const [checked, setChecked] = useState(false);
+  const [marked, setMarked] = useState(false);
   // const [editVisible, setEditVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
 
   useEffect(() => {
-    fetchOneArt(id)
+    fetchOneArt(id, User.id)
       .then((data) => {
         setArt(data);
         setImg(`${process.env.REACT_APP_API_URL}arts/${data.img}`);
+        setMarked(data.mark?.length > 0);
       })
       .catch(() => navigate(MAIN_ROUTE));
-  }, [id, navigate]);
+  }, [User, id, navigate]);
 
   return (
     <Container className="mt-3">
@@ -60,7 +61,7 @@ export default observer(() => {
           <Row>
             <div className="position-relative">
               <div className="position-absolute top-0 end-0 mx-3">
-                <MarkCheckbox artId={id} checked={checked} setChecked={setChecked} />
+                {User.isAuth && <MarkCheckbox artId={id} marked={marked} setMarked={setMarked} />}
               </div>
             </div>
             {art.artists

@@ -23,7 +23,7 @@ export const fetchArts = async (typeId, userId, artistId, page, limit) => {
   return data;
 };
 
-export const fetchOneArt = async (id) => {
-  const { data } = await $host.get(`api/art/${id}`);
+export const fetchOneArt = async (id, userId) => {
+  const { data } = await $host.get(`api/art/${id}`, { params: { userId } });
   return data;
 };

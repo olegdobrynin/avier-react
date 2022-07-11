@@ -14,8 +14,3 @@ export const fetchMarks = async (id, page, limit) => {
   const { data } = await $authHost.get(`api/mark/${id}`, { params: { page, limit } });
   return data;
 };
-
-export const checkMark = async (id, artId) => {
-  const { data } = await $authHost.get(`api/mark/${id}/art/${artId}`);
-  return data;
-};
