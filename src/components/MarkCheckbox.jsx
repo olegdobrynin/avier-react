@@ -4,14 +4,14 @@ import { Form } from 'react-bootstrap';
 import { createMark, deleteMark } from '../http/markAPI.js';
 import { UserContext } from '../contexts.jsx';
 
-export default observer(({ art, checked, setChecked }) => {
+export default observer(({ artId, checked, setChecked }) => {
   const User = useContext(UserContext);
 
   const toggleCheckbox = () => {
     if (checked) {
-      deleteMark(User.id, art.id);
+      deleteMark(User.id, artId);
     } else {
-      createMark(User.id, art.id);
+      createMark(User.id, artId);
     }
     setChecked(!checked);
   };

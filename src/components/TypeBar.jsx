@@ -8,15 +8,10 @@ export default observer(({ type, setType }) => {
 
   return (
     <Nav variant="pills" defaultActiveKey={type || 0} className="my-2">
-      <Nav.Item key="0">
-        <Nav.Link eventKey="0" key="0" onClick={() => setType()}>
-          Все
-        </Nav.Link>
-      </Nav.Item>
-      {Types.types.map((t) => (
-        <Nav.Item key={t.id}>
-          <Nav.Link eventKey={t.id} key={t.id} onClick={() => setType(t.id)}>
-            {t.name}
+      <div className="scrolling">
+        <Nav.Item key="0" class="typeCard">
+          <Nav.Link eventKey="0" key="0" onClick={() => setType()}>
+            Все
           </Nav.Link>
         </Nav.Item>
         {Types.types.map((t) => (
