@@ -13,4 +13,12 @@ export default class TypesStore {
   setTypes(types) {
     this._types = types;
   }
+
+  addType(type) {
+    this._types.push(type);
+  }
+
+  deleteType(type) {
+    this._types = this._types.filter(({ id }) => id !== Number(type));
+  }
 }
