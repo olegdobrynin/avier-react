@@ -18,7 +18,8 @@ export default observer(() => {
 
   useEffect(() => {
     if (fetching) {
-      fetchArts(type, User.id, null, page, limit)
+      const params = { typeId, page, limit };
+      fetchArts({ ...params, userId: User.id })
         .then((data) => {
           if (prevTypeId === typeId) {
             setArts([...arts, ...data.rows]);

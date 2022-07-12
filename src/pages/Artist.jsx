@@ -24,7 +24,7 @@ export default observer(() => {
   useEffect(() => {
     fetchOneArtist(id)
       .then((data) => setArtist({ ...data, img: `${process.env.REACT_APP_API_URL}artists/${data.img}` }))
-      .then(() => fetchArts(null, User.id, id))
+      .then(() => fetchArts({ userId: User.id, artistId: id }))
       .then((data) => setArts(data.rows))
       .catch(() => navigate(MAIN_ROUTE));
   }, [User, id, navigate]);
