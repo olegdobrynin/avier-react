@@ -17,17 +17,46 @@ export default observer(() => {
   const { id } = useParams();
   const User = useContext(UserContext);
   const [arts, setArts] = useState([]);
+  const [prevArts, setPrevArts] = useState();
   const [artist, setArtist] = useState({});
+  const [page, setPage] = useState(1);
+  const [limit] = useState(Number(process.env.REACT_APP_LIMIT));
+  const [fetching, setFetching] = useState(true);
   const [editVisible, setEditVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
 
   useEffect(() => {
     fetchOneArtist(id)
       .then((data) => setArtist({ ...data, img: `${process.env.REACT_APP_API_URL}artists/${data.img}` }))
-      .then(() => fetchArts({ userId: User.id, artistId: id }))
-      .then((data) => setArts(data.rows))
       .catch(() => navigate(MAIN_ROUTE));
   }, [User, id, navigate]);
+
+  useEffect(() => {
+    if (fetching) {
+      const params = { artistId: id, userId: User.id };
+      fetchArts({ page, limit, ...params })
+        .then((data) => {
+          setArts([...arts, ...data.rows]);
+          setPrevArts(data.rows.length);
+          setPage((prevState) => prevState + 1);
+        })
+        .finally(() => setFetching(false));
+    }
+  }, [fetching]);
+
+  const scrollHandler = ({ target: { documentElement } }) => {
+    const { scrollHeight, scrollTop } = documentElement;
+    if (scrollHeight - (scrollTop + window.innerHeight) < 100 && prevArts === limit) {
+      setFetching(true);
+    }
+  };
+
+  useEffect(() => {
+    if (prevArts === limit) {
+      document.addEventListener('scroll', scrollHandler);
+    }
+    return () => document.removeEventListener('scroll', scrollHandler);
+  }, [prevArts]);
 
   return (
     <Container className="mt-3">
