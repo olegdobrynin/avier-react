@@ -15,11 +15,6 @@ export default observer(({ art }) => {
   return (
     <Col md={3}>
       <Card style={{ cursor: 'pointer' }} border="light" className="mb-3 w-100">
-        <div className="position-relative">
-          <div className="position-absolute top-0 end-0 mx-3">
-            {User.isAuth && <MarkCheckbox artId={art.id} marked={marked} setMarked={setMarked} />}
-          </div>
-        </div>
         <Link to={`${ART_ROUTE}/${art.id}`} tabIndex="0" style={{ textDecoration: 'none' }}>
           <Card.Img className="w-100" src={`${process.env.REACT_APP_API_URL}arts/${art.img}`} />
           <Card.Body>
@@ -28,10 +23,14 @@ export default observer(({ art }) => {
             </div>
           </Card.Body>
         </Link>
+        {User.isAuth && (
+        <div className="d-flex justify-content-between mx-3 my-3">
+          <LikeCheckbox artId={art.id} likes={art.likes} liked={liked} setLiked={setLiked} />
+          <MarkCheckbox artId={art.id} marked={marked} setMarked={setMarked} />
+        </div>
+        )}
       </Card>
-      {User.isAuth && (
-        <LikeCheckbox artId={art.id} likes={art.likes} liked={liked} setLiked={setLiked} />
-      )}
+
     </Col>
   );
 });

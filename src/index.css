@@ -10,7 +10,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-#checkbox {
+#markcb {
   /* display: none; */
   background: rgba(0, 0, 0, 0);
   content: url('../public/mark.png');
@@ -20,9 +20,24 @@ code {
   border: none;
   margin: 0;
 }
-#checkbox:checked {
+#markcb:checked {
   background: rgba(0, 0, 0, 0);
   content: url('../public/marked.png');
+}
+#likecb {
+  /* display: none; */
+  background: rgba(0, 0, 0, 0);
+  content: url('../public/like.png');
+  z-index: 100;
+  width: 30px;
+  height: 30px;
+  border: none;
+  padding-left: 0;
+  margin: 0 10px;
+}
+#likecb:checked {
+  background: rgba(0, 0, 0, 0);
+  content: url('../public/liked.png');
 }
 .scrolling {
   display: flex;

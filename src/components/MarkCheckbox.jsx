@@ -16,5 +16,5 @@ export default observer(({ artId, marked, setMarked }) => {
     setMarked(!marked);
   };
 
-  return <Form.Check checked={marked} id="checkbox" onChange={toggleCheckbox} />;
+  return <Form.Check checked={marked} id="markcb" onChange={toggleCheckbox} />;
 });

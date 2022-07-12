@@ -62,14 +62,16 @@ export default observer(() => {
         </Col>
         <Col md={4}>
           <Row>
-            <div className="position-relative">
-              <div className="position-absolute top-0 end-0 mx-3">
-                {User.isAuth && <MarkCheckbox artId={id} marked={marked} setMarked={setMarked} />}
-              </div>
+            <div className="d-flex justify-content-between">
+              {User.isAuth && (
+                <>
+                  <LikeCheckbox artId={id} likes={art.likes} liked={liked} setLiked={setLiked} />
+                  <MarkCheckbox artId={id} marked={marked} setMarked={setMarked} />
+                </>
+              )}
             </div>
-            {User.isAuth && (
-              <LikeCheckbox artId={id} likes={art.likes} liked={liked} setLiked={setLiked} />
-            )}
+          </Row>
+          <Row>
             {art.artists
               && art.artists.map((artist) => (
                 <Row key={artist.id}>

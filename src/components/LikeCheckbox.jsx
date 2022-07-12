@@ -18,5 +18,5 @@ export default observer(({
     setLiked(!liked);
   };
 
-  return <Form.Check checked={liked} label={likes} onChange={toggleCheckbox} />;
+  return <Form.Check className="px-0" checked={liked} label={likes} id="likecb" onChange={toggleCheckbox} />;
 });
