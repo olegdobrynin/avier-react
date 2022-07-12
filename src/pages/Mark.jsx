@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
+import { LIMIT } from '../utils/consts.js';
 import { fetchMarks } from '../http/markAPI.js';
 import { UserContext } from '../contexts.jsx';
 import ArtList from '../components/ArtList.jsx';
@@ -10,12 +11,11 @@ export default observer(() => {
   const [arts, setArts] = useState([]);
   const [prevArtsCount, setPrevArtsCount] = useState();
   const [page, setPage] = useState(1);
-  const [limit] = useState(Number(process.env.REACT_APP_LIMIT));
   const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
     if (fetching) {
-      fetchMarks(User.id, page, limit)
+      fetchMarks(User.id, page, LIMIT)
         .then((data) => {
           setArts([...arts, ...data.rows]);
           setPrevArtsCount(data.rows.length);
@@ -27,13 +27,13 @@ export default observer(() => {
 
   const scrollHandler = ({ target: { documentElement } }) => {
     const { scrollHeight, scrollTop } = documentElement;
-    if (scrollHeight - (scrollTop + window.innerHeight) < 200 && prevArtsCount === limit) {
+    if (scrollHeight - (scrollTop + window.innerHeight) < 200 && prevArtsCount === LIMIT) {
       setFetching(true);
     }
   };
 
   useEffect(() => {
-    if (prevArtsCount === limit) {
+    if (prevArtsCount === LIMIT) {
       document.addEventListener('scroll', scrollHandler);
     }
     return () => document.removeEventListener('scroll', scrollHandler);

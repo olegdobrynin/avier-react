@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
+import { LIMIT } from '../utils/consts.js';
 import { fetchArts } from '../http/artAPI.js';
 import { UserContext } from '../contexts.jsx';
 import ArtList from '../components/ArtList.jsx';
@@ -13,12 +14,11 @@ export default observer(() => {
   const [typeId, setTypeId] = useState();
   const [prevTypeId, setPrevTypeId] = useState();
   const [page, setPage] = useState(1);
-  const [limit] = useState(Number(process.env.REACT_APP_LIMIT));
   const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
     if (fetching) {
-      const params = { typeId, page, limit };
+      const params = { typeId, page, limit: LIMIT };
       fetchArts({ ...params, userId: User.id })
         .then((data) => {
           if (prevTypeId === typeId) {
@@ -36,13 +36,13 @@ export default observer(() => {
 
   const scrollHandler = ({ target: { documentElement } }) => {
     const { scrollHeight, scrollTop } = documentElement;
-    if (scrollHeight - (scrollTop + window.innerHeight) < 100 && prevArts === limit) {
+    if (scrollHeight - (scrollTop + window.innerHeight) < 200 && prevArts === LIMIT) {
       setFetching(true);
     }
   };
 
   useEffect(() => {
-    if (prevArts === limit) {
+    if (prevArts === LIMIT) {
       document.addEventListener('scroll', scrollHandler);
     }
     return () => document.removeEventListener('scroll', scrollHandler);

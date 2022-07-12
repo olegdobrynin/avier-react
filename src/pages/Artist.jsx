@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { fetchArts } from '../http/artAPI.js';
 import { fetchOneArtist } from '../http/artistAPI.js';
-import { MAIN_ROUTE } from '../utils/consts.js';
+import { LIMIT, MAIN_ROUTE } from '../utils/consts.js';
 import { UserContext } from '../contexts.jsx';
 import ArtList from '../components/ArtList.jsx';
 import EditArtist from '../components/modals/EditArtist.jsx';
@@ -20,7 +20,6 @@ export default observer(() => {
   const [prevArts, setPrevArts] = useState();
   const [artist, setArtist] = useState({});
   const [page, setPage] = useState(1);
-  const [limit] = useState(Number(process.env.REACT_APP_LIMIT));
   const [fetching, setFetching] = useState(true);
   const [editVisible, setEditVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
@@ -34,7 +33,7 @@ export default observer(() => {
   useEffect(() => {
     if (fetching) {
       const params = { artistId: id, userId: User.id };
-      fetchArts({ page, limit, ...params })
+      fetchArts({ page, limit: LIMIT, ...params })
         .then((data) => {
           setArts([...arts, ...data.rows]);
           setPrevArts(data.rows.length);
@@ -46,13 +45,13 @@ export default observer(() => {
 
   const scrollHandler = ({ target: { documentElement } }) => {
     const { scrollHeight, scrollTop } = documentElement;
-    if (scrollHeight - (scrollTop + window.innerHeight) < 100 && prevArts === limit) {
+    if (scrollHeight - (scrollTop + window.innerHeight) < 200 && prevArts === LIMIT) {
       setFetching(true);
     }
   };
 
   useEffect(() => {
-    if (prevArts === limit) {
+    if (prevArts === LIMIT) {
       document.addEventListener('scroll', scrollHandler);
     }
     return () => document.removeEventListener('scroll', scrollHandler);
