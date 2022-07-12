@@ -6,12 +6,12 @@ import { updateArtist } from '../../http/artistAPI.js';
 import { UserContext } from '../../contexts.jsx';
 
 export default observer(({
-  show, onHide, artist, setArtist, setImg,
+  show, onHide, artist, setArtist,
 }) => {
   const User = useContext(UserContext);
   const { id } = useParams();
-  const [name, setName] = useState('');
-  const [bio, setBio] = useState('');
+  const [name, setName] = useState(artist);
+  const [bio, setBio] = useState(artist.bio);
   const [file, setFile] = useState(null);
   const [userLogin, setUserLogin] = useState(User.login);
 
@@ -24,7 +24,7 @@ export default observer(({
     setFile(e.target.files[0]);
   };
 
-  const addArtist = () => {
+  const editArtist = () => {
     const formData = new FormData();
     formData.set('name', name);
     formData.set('bio', bio);
@@ -39,8 +39,8 @@ export default observer(({
         } else {
           User.deleteArtist({ id });
         }
-        setArtist(data);
-        setImg(`${process.env.REACT_APP_API_URL}artists/${data.img}`);
+        const img = `${process.env.REACT_APP_API_URL}artists/${data.img}`;
+        setArtist({ ...data, img });
         onHide();
       })
       .catch((e) => alert(e.response.data.message));
@@ -90,7 +90,7 @@ export default observer(({
 
       <Modal.Footer>
         <Button onClick={onHide}>Закрыть</Button>
-        <Button onClick={addArtist}>Изменить</Button>
+        <Button onClick={editArtist}>Изменить</Button>
       </Modal.Footer>
     </Modal>
   );

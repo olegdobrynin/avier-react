@@ -18,16 +18,12 @@ export default observer(() => {
   const User = useContext(UserContext);
   const [arts, setArts] = useState([]);
   const [artist, setArtist] = useState({});
-  const [img, setImg] = useState('');
   const [editVisible, setEditVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
 
   useEffect(() => {
     fetchOneArtist(id)
-      .then((data) => {
-        setArtist(data);
-        setImg(`${process.env.REACT_APP_API_URL}artists/${data.img}`);
-      })
+      .then((data) => setArtist({ ...data, img: `${process.env.REACT_APP_API_URL}artists/${data.img}` }))
       .then(() => fetchArts(null, User.id, id))
       .then((data) => setArts(data.rows))
       .catch(() => navigate(MAIN_ROUTE));
@@ -37,7 +33,7 @@ export default observer(() => {
     <Container className="mt-3">
       <Row className="my-3">
         <Col md={8}>
-          <Image className="w-100" src={img} />
+          <Image className="w-100" src={artist.img} />
         </Col>
         <Col md={4}>
           <Row>
@@ -58,7 +54,6 @@ export default observer(() => {
                 onHide={() => setEditVisible(false)}
                 artist={artist}
                 setArtist={setArtist}
-                setImg={setImg}
               />
               <Button
                 className="my-2"
