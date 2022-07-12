@@ -115,7 +115,7 @@ export default observer(() => {
           )}
 
           {(User.role === 'admin'
-            || User.artists.some((artist) => art.artists.some((a) => a.id === artist.id))) && (
+            || User.artists.some((artist) => art.artists?.some((a) => a.id === artist.id))) && (
             <Row>
               {/* <Button
                 className='mt-2 mb-2'
@@ -132,7 +132,6 @@ export default observer(() => {
               >
                 Удалить
               </Button>
-
               <DeleteArt show={deleteVisible} onHide={() => setDeleteVisible(false)} />
             </Row>
           )}

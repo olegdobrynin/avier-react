@@ -10,6 +10,7 @@ import {
   ADMIN_ROUTE,
   LOGIN_ROUTE,
   MAIN_ROUTE,
+  MARK_ROUTE,
   REGISTRATION_ROUTE,
   USER_ARTIST_ROUTE,
   PROFILE_ROUTE,
@@ -56,6 +57,7 @@ export default observer(() => {
               <NavDropdown.Item onClick={() => navigate(USER_ARTIST_ROUTE)}>
                 Художники
               </NavDropdown.Item>
+              <NavDropdown.Item onClick={() => navigate(MARK_ROUTE)}>Закладки</NavDropdown.Item>
               <NavDropdown.Item onClick={() => setArtVisible(true)}>Добавить арт</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={() => navigate(PROFILE_ROUTE)}>Настройки</NavDropdown.Item>
