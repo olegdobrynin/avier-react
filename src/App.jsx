@@ -22,14 +22,14 @@ export default observer(() => {
         .then(() => User.setIsAuth())
         .then(() => fetchArtists(User.id))
         .then((artists) => User.setArtists(artists))
+        .catch(() => localStorage.clear())
         .then(() => fetchTypes())
         .then((types) => Types.setTypes(types))
-        .catch(() => localStorage.clear())
         .finally(() => setLoading(false));
     } else {
       fetchTypes()
         .then((types) => Types.setTypes(types))
-        .then(() => setLoading(false));
+        .finally(() => setLoading(false));
     }
   }, [Types, User]);
 
