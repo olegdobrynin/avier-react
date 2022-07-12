@@ -4,30 +4,63 @@ import { observer } from 'mobx-react-lite';
 import { fetchArts } from '../http/artAPI.js';
 import { UserContext } from '../contexts.jsx';
 import ArtList from '../components/ArtList.jsx';
-import Pages from '../components/Pages.jsx';
 import TypeBar from '../components/TypeBar.jsx';
 
 export default observer(() => {
   const User = useContext(UserContext);
   const [arts, setArts] = useState([]);
-  const [type, setType] = useState();
+  const [prevArts, setPrevArts] = useState();
+  const [typeId, setTypeId] = useState();
+  const [prevTypeId, setPrevTypeId] = useState();
   const [page, setPage] = useState(1);
-  const [totalCount, setTotalCount] = useState(0);
+  const [limit] = useState(Number(process.env.REACT_APP_LIMIT));
+  const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
-    fetchArts(type, User.id, null, page, 8).then((data) => {
-      setArts(data.rows);
-      setTotalCount(data.count);
-    });
-  }, [User, page, type]);
+    if (fetching) {
+      fetchArts(type, User.id, null, page, limit)
+        .then((data) => {
+          if (prevTypeId === typeId) {
+            setArts([...arts, ...data.rows]);
+          } else {
+            setArts(data.rows);
+            setPrevTypeId(typeId);
+          }
+          setPrevArts(data.rows.length);
+          setPage((prevState) => prevState + 1);
+        })
+        .finally(() => setFetching(false));
+    }
+  }, [fetching]);
 
-  useEffect(() => setPage(1), [type]);
+  const scrollHandler = ({ target: { documentElement } }) => {
+    const { scrollHeight, scrollTop } = documentElement;
+    if (scrollHeight - (scrollTop + window.innerHeight) < 100 && prevArts === limit) {
+      setFetching(true);
+    }
+  };
+
+  useEffect(() => {
+    if (prevArts === limit) {
+      document.addEventListener('scroll', scrollHandler);
+    }
+    return () => document.removeEventListener('scroll', scrollHandler);
+  }, [typeId, prevArts]);
+
+  useEffect(() => {
+    setFetching(true);
+    setPage(1);
+  }, [typeId]);
+
+  const changeType = (id) => {
+    setPrevTypeId(typeId);
+    setTypeId(id);
+  };
 
   return (
     <Container>
-      <TypeBar type={type} setType={setType} setPage={setPage} />
+      <TypeBar changeType={changeType} />
       <ArtList arts={arts} />
-      {!totalCount || <Pages page={page} setPage={setPage} totalCount={totalCount} />}
     </Container>
   );
 });
