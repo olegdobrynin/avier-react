@@ -60,10 +60,10 @@ export default observer(() => {
   return (
     <Container className="mt-3">
       <Row className="my-3">
-        <Col md={8}>
+        <Col md={5}>
           <Image className="w-100" src={artist.img} />
         </Col>
-        <Col md={4}>
+        <Col md={7}>
           <Row>
             <h2>{artist.name}</h2>
           </Row>
