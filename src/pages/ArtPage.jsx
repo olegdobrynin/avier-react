@@ -38,8 +38,8 @@ export default observer(() => {
   return (
     <Container className="mt-3">
       <Row>
-        <Col md={8}>
           <Image className="w-100" src={img} />
+        <Col md={6}>
           <Row>
             {art.imgs
               && art.imgs.map((i) => (
@@ -60,7 +60,7 @@ export default observer(() => {
               ))}
           </Row>
         </Col>
-        <Col md={4}>
+        <Col md={6}>
           <Row>
             <div className="d-flex justify-content-between">
               {User.isAuth && (
