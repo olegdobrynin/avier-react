@@ -10,7 +10,7 @@ import TypeBar from '../components/TypeBar.jsx';
 export default observer(() => {
   const User = useContext(UserContext);
   const [arts, setArts] = useState([]);
-  const [prevArts, setPrevArts] = useState();
+  const [prevArtsCount, setPrevArtsCount] = useState();
   const [typeId, setTypeId] = useState();
   const [prevTypeId, setPrevTypeId] = useState();
   const [page, setPage] = useState(1);
@@ -22,12 +22,12 @@ export default observer(() => {
       fetchArts({ ...params, userId: User.id })
         .then((data) => {
           if (prevTypeId === typeId) {
-            setArts([...arts, ...data.rows]);
+            setArts([...arts, ...data]);
           } else {
-            setArts(data.rows);
+            setArts(data);
             setPrevTypeId(typeId);
           }
-          setPrevArts(data.rows.length);
+          setPrevArtsCount(data.length);
           setPage((prevState) => prevState + 1);
         })
         .finally(() => setFetching(false));
@@ -36,17 +36,17 @@ export default observer(() => {
 
   const scrollHandler = ({ target: { documentElement } }) => {
     const { scrollHeight, scrollTop } = documentElement;
-    if (scrollHeight - (scrollTop + window.innerHeight) < 200 && prevArts === LIMIT) {
+    if (scrollHeight - (scrollTop + window.innerHeight) < 200 && prevArtsCount === LIMIT) {
       setFetching(true);
     }
   };
 
   useEffect(() => {
-    if (prevArts === LIMIT) {
+    if (prevArtsCount === LIMIT) {
       document.addEventListener('scroll', scrollHandler);
     }
     return () => document.removeEventListener('scroll', scrollHandler);
-  }, [typeId, prevArts]);
+  }, [typeId, prevArtsCount]);
 
   useEffect(() => {
     setFetching(true);

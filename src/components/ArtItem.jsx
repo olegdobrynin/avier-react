@@ -9,8 +9,8 @@ import { UserContext } from '../contexts.jsx';
 
 export default observer(({ art }) => {
   const User = useContext(UserContext);
-  const [liked, setLiked] = useState(art.like?.length > 0);
-  const [marked, setMarked] = useState(art.mark?.length > 0);
+  const [liked, setLiked] = useState(art.like);
+  const [marked, setMarked] = useState(art.mark);
 
   return (
     <Col md={3}>
@@ -24,13 +24,12 @@ export default observer(({ art }) => {
           </Card.Body>
         </Link>
         {User.isAuth && (
-        <div className="d-flex justify-content-between mx-3 my-3">
-          <LikeCheckbox artId={art.id} likes={art.likes} liked={liked} setLiked={setLiked} />
-          <MarkCheckbox artId={art.id} marked={marked} setMarked={setMarked} />
-        </div>
+          <div className="d-flex justify-content-between mx-3 my-3">
+            <LikeCheckbox artId={art.id} likes={art.likes} liked={liked} setLiked={setLiked} />
+            <MarkCheckbox artId={art.id} marked={marked} setMarked={setMarked} />
+          </div>
         )}
       </Card>
-
     </Col>
   );
 });

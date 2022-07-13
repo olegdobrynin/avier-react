@@ -17,8 +17,8 @@ export default observer(() => {
     if (fetching) {
       fetchMarks(User.id, page, LIMIT)
         .then((data) => {
-          setArts([...arts, ...data.rows]);
-          setPrevArtsCount(data.rows.length);
+          setArts([...arts, ...data]);
+          setPrevArtsCount(data.length);
           setPage((prevState) => prevState + 1);
         })
         .finally(() => setFetching(false));

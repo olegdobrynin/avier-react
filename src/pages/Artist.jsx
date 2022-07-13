@@ -17,7 +17,7 @@ export default observer(() => {
   const { id } = useParams();
   const User = useContext(UserContext);
   const [arts, setArts] = useState([]);
-  const [prevArts, setPrevArts] = useState();
+  const [prevArtsCount, setPrevArtsCount] = useState();
   const [artist, setArtist] = useState({});
   const [page, setPage] = useState(1);
   const [fetching, setFetching] = useState(true);
@@ -35,8 +35,8 @@ export default observer(() => {
       const params = { artistId: id, userId: User.id };
       fetchArts({ page, limit: LIMIT, ...params })
         .then((data) => {
-          setArts([...arts, ...data.rows]);
-          setPrevArts(data.rows.length);
+          setArts([...arts, ...data]);
+          setPrevArtsCount(data.length);
           setPage((prevState) => prevState + 1);
         })
         .finally(() => setFetching(false));
@@ -45,17 +45,17 @@ export default observer(() => {
 
   const scrollHandler = ({ target: { documentElement } }) => {
     const { scrollHeight, scrollTop } = documentElement;
-    if (scrollHeight - (scrollTop + window.innerHeight) < 200 && prevArts === LIMIT) {
+    if (scrollHeight - (scrollTop + window.innerHeight) < 200 && prevArtsCount === LIMIT) {
       setFetching(true);
     }
   };
 
   useEffect(() => {
-    if (prevArts === LIMIT) {
+    if (prevArtsCount === LIMIT) {
       document.addEventListener('scroll', scrollHandler);
     }
     return () => document.removeEventListener('scroll', scrollHandler);
-  }, [prevArts]);
+  }, [prevArtsCount]);
 
   return (
     <Container className="mt-3">
