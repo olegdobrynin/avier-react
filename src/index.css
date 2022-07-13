@@ -47,3 +47,6 @@ code {
 .scrolling .typeCard {
   flex: 0 0 auto;
 }
+.navbar {
+  height: 50px !important;
+}
