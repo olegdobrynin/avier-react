@@ -38,15 +38,15 @@ export default observer(() => {
   return (
     <Container className="mt-3">
       <Row>
-          <Image className="w-100" src={img} />
         <Col md={6}>
+          <Image className="w-100" id="img" src={img} />
           <Row>
             {art.imgs
               && art.imgs.map((i) => (
                 <Col key={i} xs={3} className="mt-2">
                   <Card style={{ cursor: 'pointer' }} border="light" className="mb-3 w-100">
                     <Card.Link
-                      href="#"
+                      href="#img"
                       tabIndex="0"
                       onClick={() => setImg(`${process.env.REACT_APP_API_URL}arts/${i}`)}
                     >
