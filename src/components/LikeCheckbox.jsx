@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { observer } from 'mobx-react-lite';
+import React, { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
+import { observer } from 'mobx-react-lite';
 import { createLike, deleteLike } from '../http/likeAPI.js';
-import { UserContext } from '../contexts.jsx';
 
 export default observer(({
   artId, likes, liked, setLiked,
 }) => {
-  const User = useContext(UserContext);
   const [likesCount, setLikesCount] = useState();
 
   useEffect(() => {
@@ -16,9 +14,9 @@ export default observer(({
 
   const toggleCheckbox = async () => {
     if (liked) {
-      await deleteLike(User.id, artId).then(() => setLikesCount((p) => p - 1));
+      await deleteLike(artId).then(() => setLikesCount((p) => p - 1));
     } else {
-      await createLike(User.id, artId).then(() => setLikesCount((p) => p + 1));
+      await createLike(artId).then(() => setLikesCount((p) => p + 1));
     }
     setLiked(!liked);
   };
