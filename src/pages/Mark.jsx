@@ -8,16 +8,14 @@ import ArtList from '../components/ArtList.jsx';
 export default observer(() => {
   const [arts, setArts] = useState([]);
   const [prevArtsCount, setPrevArtsCount] = useState();
-  const [page, setPage] = useState(1);
   const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
     if (fetching) {
-      fetchMarks(page, LIMIT)
+      fetchMarks(arts.at(-1)?.id, LIMIT)
         .then((data) => {
           setArts([...arts, ...data]);
           setPrevArtsCount(data.length);
-          setPage((prevState) => prevState + 1);
         })
         .finally(() => setFetching(false));
     }

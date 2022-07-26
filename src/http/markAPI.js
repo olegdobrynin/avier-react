@@ -10,7 +10,7 @@ export const deleteMark = async (artId) => {
   return data;
 };
 
-export const fetchMarks = async (page, limit) => {
-  const { data } = await $authHost.get('api/mark/', { params: { page, limit } });
+export const fetchMarks = async (artId, limit) => {
+  const { data } = await $authHost.get('api/mark/', { params: { artId, limit } });
   return data;
 };
