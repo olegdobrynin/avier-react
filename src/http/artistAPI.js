@@ -10,8 +10,8 @@ export const deleteArtist = async (id) => {
   return data;
 };
 
-export const fetchArtists = async (userId) => {
-  const { data } = await $host.get('api/artist', { params: { userId } });
+export const fetchArtists = async () => {
+  const { data } = await $authHost.get('api/artist');
   return data;
 };
 

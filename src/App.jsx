@@ -20,7 +20,7 @@ export default observer(() => {
       check()
         .then((data) => User.setInfo(data))
         .then(() => User.setIsAuth())
-        .then(() => fetchArtists(User.id))
+        .then(() => fetchArtists())
         .then((artists) => User.setArtists(artists))
         .catch(() => localStorage.clear())
         .then(() => fetchTypes())
