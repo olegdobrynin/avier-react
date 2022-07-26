@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { LIMIT } from '../utils/consts.js';
 import { fetchMarks } from '../http/markAPI.js';
-import { UserContext } from '../contexts.jsx';
 import ArtList from '../components/ArtList.jsx';
 
 export default observer(() => {
-  const User = useContext(UserContext);
   const [arts, setArts] = useState([]);
   const [prevArtsCount, setPrevArtsCount] = useState();
   const [page, setPage] = useState(1);
@@ -15,7 +13,7 @@ export default observer(() => {
 
   useEffect(() => {
     if (fetching) {
-      fetchMarks(User.id, page, LIMIT)
+      fetchMarks(page, LIMIT)
         .then((data) => {
           setArts([...arts, ...data]);
           setPrevArtsCount(data.length);

@@ -1,16 +1,16 @@
 import { $authHost } from './index.js';
 
-export const createMark = async (id, artId) => {
-  const { data } = await $authHost.post(`api/mark/${id}/art/${artId}`);
+export const createMark = async (artId) => {
+  const { data } = await $authHost.post(`api/mark/${artId}`);
   return data;
 };
 
-export const deleteMark = async (id, artId) => {
-  const { data } = await $authHost.delete(`api/mark/${id}/art/${artId}`);
+export const deleteMark = async (artId) => {
+  const { data } = await $authHost.delete(`api/mark/${artId}`);
   return data;
 };
 
-export const fetchMarks = async (id, page, limit) => {
-  const { data } = await $authHost.get(`api/mark/${id}`, { params: { page, limit } });
+export const fetchMarks = async (page, limit) => {
+  const { data } = await $authHost.get('api/mark/', { params: { page, limit } });
   return data;
 };
