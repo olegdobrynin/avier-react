@@ -1,4 +1,4 @@
-import { $authHost, $host } from './index.js';
+import { $authHost } from './index.js';
 
 export const createArt = async (art) => {
   const { data } = await $authHost.post('api/art', art);
@@ -11,11 +11,11 @@ export const deleteArt = async (id) => {
 };
 
 export const fetchArts = async (params) => {
-  const { data } = await $host.get('api/art', { params });
+  const { data } = await $authHost.get('api/art', { params });
   return data;
 };
 
-export const fetchOneArt = async (id, userId) => {
-  const { data } = await $host.get(`api/art/${id}`, { params: { userId } });
+export const fetchOneArt = async (id) => {
+  const { data } = await $authHost.get(`api/art/${id}`);
   return data;
 };

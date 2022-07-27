@@ -25,7 +25,7 @@ export default observer(() => {
   const [deleteVisible, setDeleteVisible] = useState(false);
 
   useEffect(() => {
-    fetchOneArt(id, User.id)
+    fetchOneArt(id)
       .then((data) => {
         setArt(data);
         setImg(`${process.env.REACT_APP_API_URL}arts/${data.img}`);
@@ -41,7 +41,8 @@ export default observer(() => {
         <Col md={6}>
           <Image className="w-100" id="img" src={img} />
           <Row>
-            {art.imgs && (art.imgs.length > 1)
+            {art.imgs
+              && art.imgs.length > 1
               && art.imgs.map((i) => (
                 <Col key={i} xs={3} className="mt-2">
                   <Card style={{ cursor: 'pointer' }} border="light" className="mb-3 w-100">
