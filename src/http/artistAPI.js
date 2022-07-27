@@ -1,7 +1,7 @@
 import { $authHost, $host } from './index.js';
 
-export const createArtist = async (art) => {
-  const { data } = await $authHost.post('api/artist', art);
+export const createArtist = async (artist) => {
+  const { data } = await $authHost.post('api/artist', artist);
   return data;
 };
 
@@ -20,7 +20,7 @@ export const fetchOneArtist = async (id) => {
   return data;
 };
 
-export const updateArtist = async (id, art) => {
-  const { data } = await $authHost.patch(`api/artist/${id}`, art);
+export const updateArtist = async (id, artist) => {
+  const { data } = await $authHost.patch(`api/artist/${id}`, artist);
   return data;
 };
