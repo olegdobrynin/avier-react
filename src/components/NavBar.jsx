@@ -58,7 +58,12 @@ export default observer(() => {
                 Художники
               </NavDropdown.Item>
               <NavDropdown.Item onClick={() => navigate(MARK_ROUTE)}>Закладки</NavDropdown.Item>
-              <NavDropdown.Item onClick={() => setArtVisible(true)}>Добавить арт</NavDropdown.Item>
+
+              {User.artists.length > 0 && (
+                <NavDropdown.Item onClick={() => setArtVisible(true)}>
+                  Добавить арт
+                </NavDropdown.Item>
+              )}
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={() => navigate(PROFILE_ROUTE)}>Настройки</NavDropdown.Item>
               <NavDropdown.Item onClick={() => logOut()}>Выйти</NavDropdown.Item>
