@@ -26,11 +26,14 @@ export const adminRoutes = [
   },
 ];
 
-export const authRoutes = [
+export const artistRoutes = [
   {
     path: USER_ARTIST_ROUTE,
     element: <UserArtists />,
   },
+];
+
+export const authRoutes = [
   {
     path: MARK_ROUTE,
     element: <Mark />,

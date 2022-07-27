@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { MAIN_ROUTE } from '../utils/consts.js';
 import { UserContext } from '../contexts.jsx';
 import {
-  adminRoutes, authRoutes, publicRoutes, unAuthRoutes,
+  adminRoutes, artistRoutes, authRoutes, publicRoutes, unAuthRoutes,
 } from '../routes.jsx';
 
 export default observer(() => {
@@ -13,7 +13,11 @@ export default observer(() => {
   const getRoutes = () => {
     switch (User.role) {
       case 'admin':
-        return [...adminRoutes, ...authRoutes, ...publicRoutes].map(({ path, element }) => (
+        return [...adminRoutes, ...artistRoutes, ...authRoutes, ...publicRoutes].map(
+          ({ path, element }) => <Route key={path} path={path} element={element} end />,
+        );
+      case 'artist':
+        return [...artistRoutes, ...authRoutes, ...publicRoutes].map(({ path, element }) => (
           <Route key={path} path={path} element={element} end />
         ));
       case 'user':

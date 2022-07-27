@@ -54,9 +54,11 @@ export default observer(() => {
               {User.role === 'admin' && (
                 <NavDropdown.Item onClick={() => navigate(ADMIN_ROUTE)}>Админ</NavDropdown.Item>
               )}
-              <NavDropdown.Item onClick={() => navigate(USER_ARTIST_ROUTE)}>
-                Художники
-              </NavDropdown.Item>
+              {User.role !== 'user' && (
+                <NavDropdown.Item onClick={() => navigate(USER_ARTIST_ROUTE)}>
+                  Художники
+                </NavDropdown.Item>
+              )}
               <NavDropdown.Item onClick={() => navigate(MARK_ROUTE)}>Закладки</NavDropdown.Item>
 
               {User.artists.length > 0 && (
