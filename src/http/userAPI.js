@@ -20,3 +20,7 @@ export const check = async () => {
 };
 
 export const deleteUser = (id) => $host.delete(`api/user/${id}`);
+
+export const setUserRole = async (userName, role) => {
+  $host.path(`api/user/${userName}`, { role });
+};
