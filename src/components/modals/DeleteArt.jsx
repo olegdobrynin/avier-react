@@ -9,10 +9,7 @@ export default observer(({ show, onHide }) => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const delArt = () => deleteArt(id).then((data) => {
-    alert(data.message);
-    navigate(MAIN_ROUTE);
-  });
+  const delArt = () => deleteArt(id).then(() => navigate(MAIN_ROUTE));
 
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>

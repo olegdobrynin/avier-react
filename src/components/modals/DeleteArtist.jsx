@@ -12,9 +12,8 @@ export default observer(({ show, onHide }) => {
   const { id } = useParams();
 
   const delArtist = () => {
-    deleteArtist(id).then((data) => {
+    deleteArtist(id).then(() => {
       User.deleteArtist({ id });
-      alert(data.message);
       navigate(MAIN_ROUTE);
     });
   };
