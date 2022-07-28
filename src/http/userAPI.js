@@ -26,6 +26,4 @@ export const check = async () => {
 
 export const deleteUser = (id) => $authHost.delete(`api/user/${id}`);
 
-export const setUserRole = async (userName, role) => {
-  $host.path(`api/user/${userName}`, { role });
-};
+export const setUserRole = (login, role) => $authHost.patch('api/user/role', { login, role });
