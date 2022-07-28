@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { LIMIT } from '../utils/consts.js';
 import { fetchArts } from '../http/artAPI.js';
 import ArtList from '../components/ArtList.jsx';
 import TypeBar from '../components/TypeBar.jsx';
+import { UserContext } from '../contexts.jsx';
 
 export default observer(() => {
+  const User = useContext(UserContext);
   const [arts, setArts] = useState([]);
   const [prevArtsCount, setPrevArtsCount] = useState();
   const [typeId, setTypeId] = useState();
@@ -16,7 +18,7 @@ export default observer(() => {
 
   useEffect(() => {
     if (fetching) {
-      fetchArts({ typeId, page, limit: LIMIT })
+      fetchArts(User.isAuth, { typeId, page, limit: LIMIT })
         .then((data) => {
           if (prevTypeId === typeId) {
             setArts([...arts, ...data]);

@@ -25,7 +25,7 @@ export default observer(() => {
   const [deleteVisible, setDeleteVisible] = useState(false);
 
   useEffect(() => {
-    fetchOneArt(id)
+    fetchOneArt(User.isAuth, id)
       .then((data) => {
         setArt(data);
         setImg(`${process.env.REACT_APP_API_URL}arts/${data.img}`);

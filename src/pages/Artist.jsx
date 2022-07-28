@@ -32,7 +32,7 @@ export default observer(() => {
 
   useEffect(() => {
     if (fetching) {
-      fetchArts({ artistId: id, page, limit: LIMIT })
+      fetchArts(User.isAuth, { artistId: id, page, limit: LIMIT })
         .then((data) => {
           setArts([...arts, ...data]);
           setPrevArtsCount(data.length);
