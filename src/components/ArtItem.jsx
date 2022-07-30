@@ -14,9 +14,13 @@ export default observer(({ art }) => {
 
   return (
     <Col md={3}>
-      <Card style={{ cursor: 'pointer' }} border="light" className="mb-3 w-100">
+      <Card style={{ cursor: 'pointer', border: 'none' }} className="mb-3 w-100">
         <Link to={`${ART_ROUTE}/${art.id}`} tabIndex="0" style={{ textDecoration: 'none' }}>
-          <Card.Img className="w-100" src={`${process.env.REACT_APP_API_URL}arts/${art.img}`} />
+          <Card.Img
+            style={{ boxShadow: '0 0 12px black', borderRadius: '0' }}
+            className="w-100"
+            src={`${process.env.REACT_APP_API_URL}arts/${art.img}`}
+          />
           <Card.Body>
             <div className="d-flex justify-content-center align-items-center">
               <Card.Title style={{ color: 'black' }}>{art.name}</Card.Title>
