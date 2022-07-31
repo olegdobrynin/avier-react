@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import {
-  Button, Card, Container, Form,
+  Alert, Button, Card, Container, Form,
 } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
@@ -16,6 +16,7 @@ export default observer(() => {
   const isLogin = location.pathname === LOGIN_ROUTE;
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
 
   const click = async () => {
     try {
@@ -31,7 +32,7 @@ export default observer(() => {
       User.setArtists(artists);
       navigate(MAIN_ROUTE);
     } catch (e) {
-      alert(e.response.data.message);
+      setMessage(e.response.data.message);
     }
   };
 
@@ -64,6 +65,12 @@ export default observer(() => {
               onKeyPress={handleKeyPress}
             />
           </Form.Group>
+          {message && (
+            <Alert key="danger" variant="danger">
+              {message}
+            </Alert>
+          )}
+
           <Button className="mt-3" variant="primary" onClick={click}>
             {isLogin ? 'Войти' : 'Зарегистрироваться'}
           </Button>
