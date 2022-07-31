@@ -34,7 +34,9 @@ export default observer(() => {
   }, [Types, User]);
 
   return loading ? (
-    <Spinner animation="grow" />
+    <div className="d-flex justify-content-center my-3">
+      <Spinner animation="border" />
+    </div>
   ) : (
     <BrowserRouter>
       <NavBar />
