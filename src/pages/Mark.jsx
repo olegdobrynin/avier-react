@@ -36,7 +36,7 @@ export default observer(() => {
   }, [prevArtsCount]);
 
   return (
-    <Container>
+    <Container className="mt-3">
       <ArtList arts={arts} />
     </Container>
   );
