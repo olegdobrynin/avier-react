@@ -39,7 +39,7 @@ export default observer(() => {
     <Container className="mt-3">
       <Row>
         <Col md={6}>
-          <Image className="w-100" id="img" src={img} />
+          <Image className="w-100 mb-3" id="img" src={img} />
           <Row>
             {art.imgs
               && art.imgs.length > 1
@@ -73,22 +73,26 @@ export default observer(() => {
             </div>
           </Row>
           <Row>
-            {art.artists
-              && art.artists.map((artist) => (
-                <Row key={artist.id}>
+            <div className="scrolling">
+              {art.artists
+                && art.artists.map((artist) => (
                   <Link
-                    style={{ cursor: 'pointer', textDecoration: 'none' }}
+                    className=" d-flex flex-nowrap w-100"
+                    key={artist.id}
+                    style={{ cursor: 'pointer', textDecoration: 'none', whiteSpace: 'nowrap' }}
                     tabIndex="0"
                     to={`${ARTIST_ROUTE}/${artist.id}`}
                   >
-                    <h6 style={{ color: 'black' }}>{artist.name}</h6>
+                    <h3 style={{ color: 'black' }} className="me-3">
+                      {artist.name}
+                    </h3>
                   </Link>
-                </Row>
-              ))}
+                ))}
+            </div>
           </Row>
 
           <Row>
-            <h2>{art.name}</h2>
+            <h1>{art.name}</h1>
           </Row>
           {art.about && (
             <Row>
@@ -117,7 +121,7 @@ export default observer(() => {
 
           {(User.role === 'admin'
             || User.artists.some((artist) => art.artists?.some((a) => a.id === artist.id))) && (
-            <Row>
+            <Row className="mx-1">
               {/* <Button
                 className='mt-2 mb-2'
                 variant="outline-dark"
