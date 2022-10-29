@@ -19,7 +19,7 @@ export default observer(({ art }) => {
           <Card.Img
             style={{ boxShadow: '0 0 12px black', borderRadius: '0' }}
             className="w-100"
-            src={`${process.env.REACT_APP_API_URL}arts/${art.img}`}
+            src={`${process.env.REACT_APP_ARTS_URL}/${art.img}`}
           />
           <Card.Body>
             <div className="d-flex justify-content-center align-items-center">

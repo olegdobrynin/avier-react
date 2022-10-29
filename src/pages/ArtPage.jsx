@@ -28,7 +28,7 @@ export default observer(() => {
     fetchOneArt(User.isAuth, id)
       .then((data) => {
         setArt(data);
-        setImg(`${process.env.REACT_APP_API_URL}arts/${data.img}`);
+        setImg(`${process.env.REACT_APP_ARTS_URL}/${data.img}`);
         setMarked(data.mark?.length > 0);
         setLiked(data.like?.length > 0);
       })
@@ -49,12 +49,9 @@ export default observer(() => {
                     <Card.Link
                       href="#img"
                       tabIndex="0"
-                      onClick={() => setImg(`${process.env.REACT_APP_API_URL}arts/${i}`)}
+                      onClick={() => setImg(`${process.env.REACT_APP_ARTS_URL}/${i}`)}
                     >
-                      <Card.Img
-                        className="w-100"
-                        src={`${process.env.REACT_APP_API_URL}arts/${i}`}
-                      />
+                      <Card.Img className="w-100" src={`${process.env.REACT_APP_ARTS_URL}/${i}`} />
                     </Card.Link>
                   </Card>
                 </Col>

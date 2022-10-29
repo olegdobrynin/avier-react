@@ -39,7 +39,7 @@ export default observer(({
         } else {
           User.deleteArtist({ id });
         }
-        const img = `${process.env.REACT_APP_API_URL}artists/${data.img}`;
+        const img = `${process.env.REACT_APP_ARTISTS_URL}/${data.img}`;
         setArtist({ ...data, img });
         onHide();
       })

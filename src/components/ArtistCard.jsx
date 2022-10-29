@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { ARTIST_ROUTE } from '../utils/consts.js';
 
 export default observer(({ artist }) => {
-  const img = `${process.env.REACT_APP_API_URL}artists/${artist.img}`;
+  const img = `${process.env.REACT_APP_ARTISTS_URL}/${artist.img}`;
 
   return (
     <Col md={3}>
